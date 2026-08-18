@@ -1,0 +1,55 @@
+/*#include <iostream>
+#include <vector>
+using namespace std;
+
+int main()
+{
+    vector<int> arr(5);
+
+    cout << "Enter 5 elements:\n";
+    for (int i = 0; i < 5; i++)
+    {
+        cin >> arr[i];
+    }
+
+    cout << "\nPopped elements are:\n";
+    for (int i = arr.size(); i > 0; i--)
+    {
+        cout << arr.back() << " ";
+        arr.pop_back();
+    }
+
+    return 0;
+}
+*/
+
+
+/*#include <iostream>
+#include <vector>
+using namespace std;
+
+int main()
+{
+    vector<int> arr;
+    int n, element;
+
+    cout << "Enter the number of elements: ";
+    cin >> n;
+
+    cout << "Enter the elements:\n";
+
+    for (int i = 0; i < n; i++)
+    {
+        cin >> element;
+        arr.push_back(element);
+    }
+
+    cout << "\nElements in the vector are: ";
+
+    for (int i = 0; i < arr.size(); i++)
+    {
+        cout << arr[i] << " ";
+    }
+
+    return 0;
+}*/
