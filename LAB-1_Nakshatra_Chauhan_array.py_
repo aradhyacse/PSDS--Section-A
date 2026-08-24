@@ -1,0 +1,28 @@
+# import numpy as np
+
+# arr = np.array([1,2,3])
+
+# # PUSH
+# arr = np.append(arr,4)
+# print("After push:", arr)
+
+# # POP
+# arr = np.delete(arr,-1)
+# print("After pop:", arr)
+
+
+# import numpy as np
+
+# # Queue
+# queue = np.array([], dtype=int)
+
+# # ENQUEUE
+# for item in [10,20,30]:
+#     queue = np.append(queue,item)
+#     print("After ENQ", item, ":", queue)
+
+# # DEQUEUE
+# while len(queue) > 0:
+#     print("Dequeued:", queue[0])
+#     queue = np.delete(queue,0)
+#     print("Queue:", queue)
