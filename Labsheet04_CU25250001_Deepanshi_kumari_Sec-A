@@ -1,0 +1,88 @@
+import sqlite3
+
+# Connect to database
+conn = sqlite3.connect(":memory:")
+cursor = conn.cursor()
+
+# Enable Foreign Key
+cursor.execute("PRAGMA foreign_keys = ON")
+
+# Create Department table
+cursor.execute("""
+CREATE TABLE departments (
+    dept_id INTEGER PRIMARY KEY,
+    dept_name TEXT
+)
+""")
+
+# Create Employee table
+cursor.execute("""
+CREATE TABLE employees (
+    emp_id INTEGER PRIMARY KEY,
+    emp_name TEXT,
+    department_id INTEGER,
+    FOREIGN KEY (department_id) REFERENCES departments(dept_id)
+)
+""")
+
+departments = [
+    (1, "HR"),
+    (2, "IT"),
+    (3, "Finance")
+]
+
+cursor.executemany(
+    "INSERT INTO departments VALUES (?, ?)",
+    departments
+)
+
+employees = [
+    (1, "Rahul Sharma", 2),
+    (2, "Priya Singh", 1),
+    (3, "Aman Gupta", 2),
+    (4, "Neha Verma", 3),
+    (5, "Rohit Kumar", 3)
+]
+
+cursor.executemany(
+    "INSERT INTO employees VALUES (?, ?, ?)",
+    employees
+)
+
+conn.commit()
+
+# Print Department table
+print("\nDEPARTMENT TABLE")
+print("------------------------")
+print("ID   Department")
+
+cursor.execute("SELECT * FROM departments")
+
+for row in cursor.fetchall():
+    print(row[0], "  ", row[1])
+
+# Print Employee table
+print("\nEMPLOYEE TABLE")
+print("--------------------------------")
+print("ID   Employee Name    Dept ID")
+
+cursor.execute("SELECT * FROM employees")
+
+for row in cursor.fetchall():
+    print(row[0], "  ", row[1], "  ", row[2])
+
+# Join both tables
+print("\nEMPLOYEE + DEPARTMENT")
+print("--------------------------------")
+
+cursor.execute("""
+SELECT employees.emp_id, employees.emp_name, departments.dept_name
+FROM employees
+JOIN departments
+ON employees.department_id = departments.dept_id
+""")
+
+for row in cursor.fetchall():
+    print(row[0], "  ", row[1], "  ", row[2])
+
+conn.close()
