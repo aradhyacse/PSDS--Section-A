@@ -1,0 +1,87 @@
+#include <iostream>
+#include <mysql/jdbc.h>
+using namespace std;
+
+int main() {
+    try {
+        sql::mysql::MySQL_Driver *driver;
+        sql::Connection *con;
+        sql::Statement *stmt;
+        sql::ResultSet *res;
+
+        driver = sql::mysql::get_mysql_driver_instance();
+    
+        con = driver->connect("tcp://127.0.0.1:3306",
+                              "root", "1234");
+
+        stmt = con->createStatement();
+
+        stmt->execute("CREATE DATABASE IF NOT EXISTS CollegeDB");
+        con->setSchema("CollegeDB");
+
+        stmt->execute(
+            "CREATE TABLE IF NOT EXISTS Student("
+            "id INT PRIMARY KEY,"
+            "name VARCHAR(50),"
+            "email VARCHAR(50))"
+        );
+
+        // Course Table
+        stmt->execute(
+            "CREATE TABLE IF NOT EXISTS Course("
+            "cid INT PRIMARY KEY,"
+            "cname VARCHAR(50))"
+        );
+
+        // Enrollment Table with Foreign Keys
+        stmt->execute(
+            "CREATE TABLE IF NOT EXISTS Enrollment("
+            "eid INT PRIMARY KEY,"
+            "id INT,"
+            "cid INT,"
+            "FOREIGN KEY(id) REFERENCES Student(id),"
+            "FOREIGN KEY(cid) REFERENCES Course(cid))"
+        );
+
+        // Insert Student
+        stmt->execute(
+            "INSERT IGNORE INTO Student VALUES"
+            "(1,'Abhinav','abhinav@gmail.com'),"
+            "(2,'Rahul','rahul@gmail.com')"
+        );
+
+        // Insert Course
+        stmt->execute(
+            "INSERT IGNORE INTO Course VALUES"
+            "(101,'C++'),(102,'DBMS')"
+        );
+
+        // Insert Enrollment
+        stmt->execute(
+            "INSERT IGNORE INTO Enrollment VALUES"
+            "(1,1,101),(2,1,102)"
+        );
+
+        // Display Students
+        res = stmt->executeQuery("SELECT * FROM Student");
+
+        cout << "Student Details\n";
+
+        while(res->next()) {
+            cout << res->getInt("id") << " ";
+            cout << res->getString("name") << " ";
+            cout << res->getString("email") << endl;
+        }
+
+        cout << "Database connected successfully!";
+
+        delete res;
+        delete stmt;
+        delete con;
+    }
+    catch(sql::SQLException &e) {
+        cout << "Error: " << e.what();
+    }
+
+    return 0;
+}
