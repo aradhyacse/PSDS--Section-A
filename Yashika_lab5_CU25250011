@@ -1,0 +1,72 @@
+code1: 
+def infix_to_postfix(expression):
+    precedence = {'+': 1, '-': 1, '*': 2, '/': 2, '^': 3}
+    stack = []
+    output = ""
+
+    for char in expression:
+        # If character is a letter or number, add it to output
+        if char.isalnum():
+            output += char
+
+        # If opening bracket, push to stack
+        elif char == '(':
+            stack.append(char)
+
+        # If closing bracket, pop until opening bracket
+        elif char == ')':
+            while stack and stack[-1] != '(':
+                output += stack.pop()
+            stack.pop()  # Remove '('
+
+        # If operator, pop higher/equal precedence operators, then push
+        elif char in precedence:
+            while stack and stack[-1] in precedence and precedence[stack[-1]] >= precedence[char]:
+                output += stack.pop()
+            stack.append(char)
+
+    # Pop remaining operators
+    while stack:
+        output += stack.pop()
+
+    return output
+
+
+# Test the code
+expr = "A+(B*C)"
+print("Answer no 1: ")
+print("Infix:  ", expr)
+print("Postfix:", infix_to_postfix(expr))
+
+code2:
+def evaluate_postfix(expression):
+    stack = []
+
+    for char in expression:
+        if char.isdigit():
+            stack.append(int(char))
+
+        elif char in "+-*/^":
+            val2 = stack.pop()
+            val1 = stack.pop()
+
+            if char == '+':
+                stack.append(val1 + val2)
+            elif char == '-':
+                stack.append(val1 - val2)
+            elif char == '*':
+                stack.append(val1 * val2)
+            elif char == '/':
+                stack.append(int(val1 / val2))
+            elif char == '^':
+                stack.append(val1 ** val2)
+
+    return stack.pop()
+
+
+if __name__ == "__main__":
+    test_postfix = "231*+9-"
+    result = evaluate_postfix(test_postfix)
+    print("Answer 2:")
+    print("Postfix Expression:", test_postfix)
+    print("Computed Output:   ", result)
