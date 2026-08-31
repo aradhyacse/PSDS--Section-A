@@ -1,0 +1,298 @@
+# #Question - 1 - Infix to Postfix Conversion
+
+# # Custom Stack
+# class Stack:
+#     def __init__(self):
+#         self.stack = []
+
+#     def is_empty(self):
+#         return len(self.stack) == 0
+
+#     def push(self, item):
+#         self.stack.append(item)
+
+#     def pop(self):
+#         if not self.is_empty():
+#             return self.stack.pop()
+#         return None
+
+#     def peek(self):
+#         if not self.is_empty():
+#             return self.stack[-1]
+#         return None
+
+
+# # Operator precedence
+# def precedence(operator):
+#     if operator == '^':
+#         return 3
+#     elif operator == '*' or operator == '/':
+#         return 2
+#     elif operator == '+' or operator == '-':
+#         return 1
+#     return 0
+
+
+# # Infix to Postfix
+# def infix_to_postfix(infix):
+#     stack = Stack()
+#     postfix = ""
+
+#     for ch in infix:
+
+#         # If operand
+#         if ch.isalnum():
+#             postfix += ch
+
+#         # Opening parenthesis
+#         elif ch == '(':
+#             stack.push(ch)
+
+#         # Closing parenthesis
+#         elif ch == ')':
+#             while not stack.is_empty() and stack.peek() != '(':
+#                 postfix += stack.pop()
+
+#             stack.pop()  # Remove '('
+
+#         # Operator
+#         else:
+#             while (not stack.is_empty()
+#                    and stack.peek() != '('
+#                    and precedence(stack.peek()) >= precedence(ch)):
+#                 postfix += stack.pop()
+
+#             stack.push(ch)
+
+#     # Pop remaining operators
+#     while not stack.is_empty():
+#         postfix += stack.pop()
+
+#     return postfix
+
+
+# # Main program
+# infix = input("Enter Infix Expression: ")
+
+# postfix = infix_to_postfix(infix)
+
+# print("Postfix Expression:", postfix)
+
+
+
+
+
+# #Question - 2 - Postfix Expression Evaluation
+
+# # Integer Stack
+# class IntStack:
+#     def __init__(self):
+#         self.stack = []
+
+#     def is_empty(self):
+#         return len(self.stack) == 0
+
+#     def push(self, value):
+#         self.stack.append(value)
+
+#     def pop(self):
+#         if not self.is_empty():
+#             return self.stack.pop()
+#         return None
+
+
+# # Perform calculation
+# def calculate(a, b, operator):
+#     if operator == '+':
+#         return a + b
+#     elif operator == '-':
+#         return a - b
+#     elif operator == '*':
+#         return a * b
+#     elif operator == '/':
+#         return a // b
+#     elif operator == '%':
+#         return a % b
+#     elif operator == '^':
+#         return a ** b
+
+
+# # Evaluate Postfix Expression
+# def evaluate_postfix(postfix):
+#     stack = IntStack()
+
+#     for ch in postfix:
+
+#         # If operand
+#         if ch.isdigit():
+#             stack.push(int(ch))
+
+#         # If operator
+#         else:
+#             b = stack.pop()
+#             a = stack.pop()
+
+#             result = calculate(a, b, ch)
+
+#             stack.push(result)
+
+#     return stack.pop()
+
+
+# # Main program
+# postfix = input("Enter Postfix Expression: ")
+
+# result = evaluate_postfix(postfix)
+
+# print("Final Result:", result)
+
+
+
+# #Question - 3 - Implement a binary search tree with insertion, deletion, and traversal operations (inorder, preorder, postorder).
+
+
+# # Node of Binary Search Tree
+# class Node:
+#     def __init__(self, key):
+#         self.left = None
+#         self.right = None
+#         self.key = key
+
+
+# # Binary Search Tree
+# class BST:
+#     def __init__(self):
+#         self.root = None
+
+#     # Insert a node
+#     def insert(self, key):
+#         self.root = self._insert(self.root, key)
+
+#     def _insert(self, root, key):
+#         # If tree is empty
+#         if root is None:
+#             return Node(key)
+
+#         # Insert in left subtree
+#         if key < root.key:
+#             root.left = self._insert(root.left, key)
+
+#         # Insert in right subtree
+#         elif key > root.key:
+#             root.right = self._insert(root.right, key)
+
+#         return root
+
+#     # Find minimum value node
+#     def find_min(self, root):
+#         current = root
+
+#         while current.left is not None:
+#             current = current.left
+
+#         return current
+
+#     # Delete a node
+#     def delete(self, key):
+#         self.root = self._delete(self.root, key)
+
+#     def _delete(self, root, key):
+#         # If tree is empty
+#         if root is None:
+#             return root
+
+#         # Search in left subtree
+#         if key < root.key:
+#             root.left = self._delete(root.left, key)
+
+#         # Search in right subtree
+#         elif key > root.key:
+#             root.right = self._delete(root.right, key)
+
+#         # Node found
+#         else:
+
+#             # Case 1: No child
+#             if root.left is None and root.right is None:
+#                 return None
+
+#             # Case 2: Only right child
+#             elif root.left is None:
+#                 return root.right
+
+#             # Case 3: Only left child
+#             elif root.right is None:
+#                 return root.left
+
+#             # Case 4: Two children
+#             else:
+#                 successor = self.find_min(root.right)
+#                 root.key = successor.key
+#                 root.right = self._delete(root.right, successor.key)
+
+#         return root
+
+#     # Inorder Traversal
+#     def inorder(self, root):
+#         if root is not None:
+#             self.inorder(root.left)
+#             print(root.key, end=" ")
+#             self.inorder(root.right)
+
+#     # Preorder Traversal
+#     def preorder(self, root):
+#         if root is not None:
+#             print(root.key, end=" ")
+#             self.preorder(root.left)
+#             self.preorder(root.right)
+
+#     # Postorder Traversal
+#     def postorder(self, root):
+#         if root is not None:
+#             self.postorder(root.left)
+#             self.postorder(root.right)
+#             print(root.key, end=" ")
+
+
+# # Main Program
+# bst = BST()
+
+# while True:
+#     print("\n\n--- Binary Search Tree ---")
+#     print("1. Insert")
+#     print("2. Delete")
+#     print("3. Inorder Traversal")
+#     print("4. Preorder Traversal")
+#     print("5. Postorder Traversal")
+#     print("6. Exit")
+
+#     choice = int(input("Enter your choice: "))
+
+#     if choice == 1:
+#         value = int(input("Enter value to insert: "))
+#         bst.insert(value)
+#         print("Value inserted.")
+
+#     elif choice == 2:
+#         value = int(input("Enter value to delete: "))
+#         bst.delete(value)
+#         print("Value deleted if it existed.")
+
+#     elif choice == 3:
+#         print("Inorder Traversal:", end=" ")
+#         bst.inorder(bst.root)
+
+#     elif choice == 4:
+#         print("Preorder Traversal:", end=" ")
+#         bst.preorder(bst.root)
+
+#     elif choice == 5:
+#         print("Postorder Traversal:", end=" ")
+#         bst.postorder(bst.root)
+
+#     elif choice == 6:
+#         print("Program terminated.")
+#         break
+
+#     else:
+#         print("Invalid choice.")
