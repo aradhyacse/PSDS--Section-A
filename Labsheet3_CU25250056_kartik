@@ -1,0 +1,59 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+};
+
+Node *top = NULL, *front = NULL, *rear = NULL;
+
+// Stack
+void push(int x) {
+    Node* n = new Node{x, top};
+    top = n;
+}
+
+void pop() {
+    if (!top) cout << "Stack Underflow\n";
+    else {
+        Node* t = top;
+        cout << "Popped: " << t->data << endl;
+        top = top->next;
+        delete t;
+    }
+}
+
+// Queue
+void enqueue(int x) {
+    Node* n = new Node{x, NULL};
+    if (!rear)
+        front = rear = n;
+    else {
+        rear->next = n;
+        rear = n;
+    }
+}
+
+void dequeue() {
+    if (!front) cout << "Queue Underflow\n";
+    else {
+        Node* t = front;
+        cout << "Dequeued: " << t->data << endl;
+        front = front->next;
+        if (!front) rear = NULL;
+        delete t;
+    }
+}
+
+int main() {
+    push(10);
+    push(50);
+    pop();
+
+    enqueue(10);
+    enqueue(50);
+    dequeue();
+
+    return 0;
+}
