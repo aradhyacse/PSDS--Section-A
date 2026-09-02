@@ -1,0 +1,201 @@
+Question 1:
+#include <iostream>
+#include <stack>
+using namespace std;
+
+int priority(char c) {
+    if (c == '^') return 3;
+    if (c == '*' || c == '/') return 2;
+    if (c == '+' || c == '-') return 1;
+    return 0;
+}
+
+int main() {
+    string infix, postfix = "";
+    stack<char> s;
+
+    cout << "Enter Infix Expression: ";
+    cin >> infix;
+
+    for (char c : infix) {
+        if (isalnum(c))
+            postfix += c;
+        else if (c == '(')
+            s.push(c);
+        else if (c == ')') {
+            while (s.top() != '(') {
+                postfix += s.top();
+                s.pop();
+            }
+            s.pop();
+        }
+        else {
+            while (!s.empty() && priority(s.top()) >= priority(c)) {
+                postfix += s.top();
+                s.pop();
+            }
+            s.push(c);
+        }
+    }
+
+    while (!s.empty()) {
+        postfix += s.top();
+        s.pop();
+    }
+
+    cout << "Postfix: " << postfix;
+    return 0;
+}
+
+Question 2:
+
+#include <iostream>
+#include <stack>
+#include <cctype>
+using namespace std;
+
+int main() {
+    string postfix;
+    stack<int> s;
+
+    cout << "Enter Postfix Expression: ";
+    cin >> postfix;
+
+    for (char c : postfix) {
+        if (isdigit(c))
+            s.push(c - '0');
+        else {
+            int b = s.top(); s.pop();
+            int a = s.top(); s.pop();
+
+            switch (c) {
+                case '+': s.push(a + b); break;
+                case '-': s.push(a - b); break;
+                case '*': s.push(a * b); break;
+                case '/': s.push(a / b); break;
+            }
+        }
+    }
+
+    cout << "Result = " << s.top();
+    return 0;
+}
+
+Question 3:
+
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node *left, *right;
+
+    Node(int x) {
+        data = x;
+        left = right = NULL;
+    }
+};
+
+Node* insert(Node* root, int x) {
+    if (root == NULL)
+        return new Node(x);
+
+    if (x < root->data)
+        root->left = insert(root->left, x);
+    else
+        root->right = insert(root->right, x);
+
+    return root;
+}
+
+Node* minNode(Node* root) {
+    while (root->left != NULL)
+        root = root->left;
+    return root;
+}
+
+Node* deleteNode(Node* root, int x) {
+    if (root == NULL)
+        return root;
+
+    if (x < root->data)
+        root->left = deleteNode(root->left, x);
+    else if (x > root->data)
+        root->right = deleteNode(root->right, x);
+    else {
+        if (root->left == NULL) {
+            Node* temp = root->right;
+            delete root;
+            return temp;
+        }
+
+        if (root->right == NULL) {
+            Node* temp = root->left;
+            delete root;
+            return temp;
+        }
+
+        Node* temp = minNode(root->right);
+        root->data = temp->data;
+        root->right = deleteNode(root->right, temp->data);
+    }
+
+    return root;
+}
+
+void inorder(Node* root) {
+    if (root) {
+        inorder(root->left);
+        cout << root->data << " ";
+        inorder(root->right);
+    }
+}
+
+void preorder(Node* root) {
+    if (root) {
+        cout << root->data << " ";
+        preorder(root->left);
+        preorder(root->right);
+    }
+}
+
+void postorder(Node* root) {
+    if (root) {
+        postorder(root->left);
+        postorder(root->right);
+        cout << root->data << " ";
+    }
+}
+
+int main() {
+    Node* root = NULL;
+    int n, x, del;
+
+    cout << "Enter number of nodes: ";
+    cin >> n;
+
+    cout << "Enter elements: ";
+    for (int i = 0; i < n; i++) {
+        cin >> x;
+        root = insert(root, x);
+    }
+
+    cout << "\nInorder: ";
+    inorder(root);
+
+    cout << "\nPreorder: ";
+    preorder(root);
+
+    cout << "\nPostorder: ";
+    postorder(root);
+
+    cout << "\n\nEnter element to delete: ";
+    cin >> del;
+
+    root = deleteNode(root, del);
+
+    cout << "Inorder after deletion: ";
+    inorder(root);
+
+    return 0;
+}
