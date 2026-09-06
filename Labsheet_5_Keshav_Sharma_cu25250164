@@ -1,0 +1,278 @@
+// Question 1
+
+// #include <iostream>
+// #include <vector>
+// #include <cctype>
+// using namespace std;
+
+// class Stack {
+//     vector<char> stack;
+
+// public:
+//     void push(char item) {
+//         stack.push_back(item);
+//     }
+
+//     char pop() {
+//         char item = stack.back();
+//         stack.pop_back();
+//         return item;
+//     }
+
+//     char peek() {
+//         return stack.back();
+//     }
+
+//     bool is_empty() {
+//         return stack.empty();
+//     }
+// };
+
+// int precedence(char op) {
+//     if (op == '^')
+//         return 3;
+//     else if (op == '*' || op == '/')
+//         return 2;
+//     else if (op == '+' || op == '-')
+//         return 1;
+
+//     return 0;
+// }
+
+// string infix_to_postfix(string expression) {
+//     Stack stack;
+//     string postfix = "";
+
+//     for (char ch : expression) {
+//         if (isalnum(ch)) {
+//             postfix += ch;
+//         }
+//         else if (ch == '(') {
+//             stack.push(ch);
+//         }
+//         else if (ch == ')') {
+//             while (!stack.is_empty() && stack.peek() != '(')
+//                 postfix += stack.pop();
+
+//             stack.pop();
+//         }
+//         else {
+//             while (!stack.is_empty() &&
+//                    stack.peek() != '(' &&
+//                    precedence(stack.peek()) >= precedence(ch)) {
+//                 postfix += stack.pop();
+//             }
+
+//             stack.push(ch);
+//         }
+//     }
+
+//     while (!stack.is_empty())
+//         postfix += stack.pop();
+
+//     return postfix;
+// }
+
+// int main() {
+//     string expression;
+
+//     cout << "Enter a valid Infix expression: ";
+//     cin >> expression;
+
+//     string result = infix_to_postfix(expression);
+
+//     cout << "Postfix Expression: " << result;
+
+//     return 0;
+// }
+
+// Question 2
+
+// #include <iostream>
+// #include <vector>
+// using namespace std;
+
+// class IntStack {
+//     vector<int> stack;
+
+// public:
+//     void push(int item) {
+//         stack.push_back(item);
+//     }
+
+//     int pop() {
+//         int item = stack.back();
+//         stack.pop_back();
+//         return item;
+//     }
+// };
+
+// int evaluate_postfix(string expression) {
+//     IntStack stack;
+
+//     for (char ch : expression) {
+//         if (isdigit(ch)) {
+//             stack.push(ch - '0');
+//         }
+//         else {
+//             int b = stack.pop();
+//             int a = stack.pop();
+//             int result;
+
+//             if (ch == '+')
+//                 result = a + b;
+//             else if (ch == '-')
+//                 result = a - b;
+//             else if (ch == '*')
+//                 result = a * b;
+//             else if (ch == '/')
+//                 result = a / b;
+//             else if (ch == '^') {
+//                 result = 1;
+
+//                 for (int i = 0; i < b; i++)
+//                     result *= a;
+//             }
+
+//             stack.push(result);
+//         }
+//     }
+
+//     return stack.pop();
+// }
+
+// int main() {
+//     string expression;
+
+//     cout << "Enter a valid Postfix expression: ";
+//     cin >> expression;
+
+//     int result = evaluate_postfix(expression);
+
+//     cout << "Final Result: " << result;
+
+//     return 0;
+// }
+
+// Question 3
+
+// #include <iostream>
+// using namespace std;
+
+// class Node {
+// public:
+//     int data;
+//     Node* left;
+//     Node* right;
+
+//     Node(int data) {
+//         this->data = data;
+//         left = nullptr;
+//         right = nullptr;
+//     }
+// };
+
+// class BST {
+// public:
+//     Node* insert(Node* root, int data) {
+//         if (root == nullptr)
+//             return new Node(data);
+
+//         if (data < root->data)
+//             root->left = insert(root->left, data);
+
+//         else if (data > root->data)
+//             root->right = insert(root->right, data);
+
+//         return root;
+//     }
+
+//     Node* find_min(Node* root) {
+//         Node* current = root;
+
+//         while (current->left != nullptr)
+//             current = current->left;
+
+//         return current;
+//     }
+
+//     Node* delete_node(Node* root, int data) {
+//         if (root == nullptr)
+//             return root;
+
+//         if (data < root->data)
+//             root->left = delete_node(root->left, data);
+
+//         else if (data > root->data)
+//             root->right = delete_node(root->right, data);
+
+//         else {
+//             if (root->left == nullptr)
+//                 return root->right;
+
+//             else if (root->right == nullptr)
+//                 return root->left;
+
+//             Node* temp = find_min(root->right);
+//             root->data = temp->data;
+//             root->right = delete_node(root->right, temp->data);
+//         }
+
+//         return root;
+//     }
+
+//     void inorder(Node* root) {
+//         if (root != nullptr) {
+//             inorder(root->left);
+//             cout << root->data << " ";
+//             inorder(root->right);
+//         }
+//     }
+
+//     void preorder(Node* root) {
+//         if (root != nullptr) {
+//             cout << root->data << " ";
+//             preorder(root->left);
+//             preorder(root->right);
+//         }
+//     }
+
+//     void postorder(Node* root) {
+//         if (root != nullptr) {
+//             postorder(root->left);
+//             postorder(root->right);
+//             cout << root->data << " ";
+//         }
+//     }
+// };
+
+// int main() {
+//     BST bst;
+//     Node* root = nullptr;
+
+//     int values[] = {50, 30, 70, 20, 40, 60, 80};
+
+//     for (int value : values)
+//         root = bst.insert(root, value);
+
+//     cout << "Inorder Traversal:" << endl;
+//     bst.inorder(root);
+
+//     cout << "\nPreorder Traversal:" << endl;
+//     bst.preorder(root);
+
+//     cout << "\nPostorder Traversal:" << endl;
+//     bst.postorder(root);
+
+//     int value;
+
+//     cout << "\n\nEnter value to delete: ";
+//     cin >> value;
+
+//     root = bst.delete_node(root, value);
+
+//     cout << "\nInorder Traversal after deletion:" << endl;
+//     bst.inorder(root);
+
+//     return 0;
+// }
