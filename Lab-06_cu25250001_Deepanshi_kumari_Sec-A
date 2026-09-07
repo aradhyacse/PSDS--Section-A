@@ -1,0 +1,55 @@
+'''nums = list(map(int, input("Enter numbers: ").split()))
+
+if len(nums) < 3:
+    print("Enter at least 3 numbers")
+else:
+    nums.sort()
+    result = []
+
+    for i in range(len(nums) - 2):
+        left = i + 1
+        right = len(nums) - 1
+
+        while left < right:
+            total = nums[i] + nums[left] + nums[right]
+
+            if total == 0:
+                result.append([nums[i], nums[left], nums[right]])
+                left += 1
+                right -= 1
+
+            elif total < 0:
+                left += 1
+
+            else:
+                right -= 1
+
+    print("Triplets:", result)'''
+
+'''a,b = 0,1
+n = int(input("Number of terms: "))
+if n <= 0:
+    print("Please enter a positive integer")
+elif n == 1:
+    print("Fibonacci sequence up to", n, ":")
+    print(a)
+while a < n:
+    print(a, end=' ')
+    a, b = b, a+b'''
+
+'''def tower(n, source, helper, destination):
+
+    if n == 1:
+        print(source, "->", destination)
+        return
+
+    tower(n - 1, source, destination, helper)
+
+    print(source, "->", destination)
+
+    tower(n - 1, helper, source, destination)
+
+
+n = int(input("Enter number of disks: "))
+
+tower(n, "A", "B", "C")'''
