@@ -1,0 +1,42 @@
+3SUM PROBLEM.
+
+a = [5, 6, -3, 8, 1, 9, 2]
+
+print("Triplets with sum 0:")
+
+for i in range(len(a) - 2):
+    for j in range(i + 1, len(a) - 1):
+        for k in range(j + 1, len(a)):
+            if a[i] + a[j] + a[k] == 0:
+                print(a[i], a[j], a[k])
+--------------------------------------------
+FIBIONACCI SERIES.
+
+n = int(input("Enter number of terms: "))
+
+a = 1
+b = 1
+
+print("Fibonacci Series:", end=" ")
+
+for i in range(n):
+    print(a, end=" ")
+    a, b = b, a + b
+----------------------------------------------
+TOWER OF HANOI.
+
+def tower(n, source, auxiliary, destination):
+    if n == 1:
+        print("Move disk 1 from", source, "to", destination)
+        return
+
+    tower(n - 1, source, destination, auxiliary)
+
+    print("Move disk", n, "from", source, "to", destination)
+
+    tower(n - 1, auxiliary, source, destination)
+
+
+n = int(input("Enter number of disks: "))
+
+tower(n, 'A', 'B', 'C')
