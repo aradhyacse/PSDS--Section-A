@@ -1,0 +1,44 @@
+'''# 1. 3Sum Problem
+arr = list(map(int, input("Enter the elements separated by space: ").split()))
+target = int(input("Enter the target: "))
+n = len(arr)
+found = False
+for i in range(n):
+    for j in range(i + 1, n):
+        for k in range(j + 1, n):
+            if arr[i] + arr[j] + arr[k] == target:
+                print(arr[i], arr[j], arr[k])
+                found = True
+if found == False:
+    print("No triplet found")
+
+
+# 2. Fibonacci Series
+n = int(input("Enter the number of terms: "))
+
+a = 1
+b = 1
+
+if n >= 1:
+    print(a, end=" ")
+
+if n >= 2:
+    print(b, end=" ")
+
+for i in range(2, n):
+    c = a + b
+    print(c, end=" ")
+    a = b
+    b = c
+
+
+#  3. Tower of Hanoi with User Input
+def tower_of_hanoi(n, source, auxiliary, destination):
+    if n == 1:
+        print("Move disk 1 from", source, "to", destination)
+        return
+    tower_of_hanoi(n - 1, source, destination, auxiliary)
+    print("Move disk", n, "from", source, "to", destination)
+    tower_of_hanoi(n - 1, auxiliary, source, destination)
+n = int(input("Enter the number of disks: "))
+tower_of_hanoi(n, 'A', 'B', 'C')'''
