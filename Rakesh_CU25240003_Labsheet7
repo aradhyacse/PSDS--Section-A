@@ -1,0 +1,101 @@
+# # 1. Heap, Priority Queue and Heap Sort
+# import heapq
+
+# # Min Heap / Priority Queue
+# heap = []
+
+# for x in [30, 10, 50, 20, 40]:
+#     heapq.heappush(heap, x)
+
+# print("Min Heap:", end=" ")
+
+# while heap:
+#     print(heapq.heappop(heap), end=" ")
+
+# print()
+
+
+# # Max Heap / Priority Queue
+# heap = []
+
+# for x in [30, 10, 50, 20, 40]:
+#     heapq.heappush(heap, -x)
+
+# print("Max Heap:", end=" ")
+
+# while heap:
+#     print(-heapq.heappop(heap), end=" ")
+
+# print()
+
+
+# # Heap Sort
+# def heap_sort(arr):
+#     heapq.heapify(arr)
+#     return [heapq.heappop(arr) for _ in range(len(arr))]
+
+
+# arr = [40, 10, 30, 50, 20]
+
+# print("Original Array:", arr)
+# print("Heap Sorted Array:", heap_sort(arr))
+
+
+
+
+# #2. Rearrange Array to Maximize Adjacent Sum Difference
+
+# def maximize_difference(arr):
+#     arr.sort()
+
+#     result = []
+#     left = 0
+#     right = len(arr) - 1
+
+#     while left <= right:
+#         result.append(arr[left])
+#         left += 1
+
+#         if left <= right:
+#             result.append(arr[right])
+#             right -= 1
+
+#     total = sum(abs(result[i] - result[i - 1])
+#                 for i in range(1, len(result)))
+
+#     return result, total
+
+
+# arr = [4, 2, 7, 1]
+
+# result, total = maximize_difference(arr)
+
+# print("Rearranged Array:", result)
+# print("Total Sum:", total)
+
+
+
+
+# #3. Smallest Subarray with Sum Greater Than Target
+
+# def smallest_subarray(arr, target):
+#     left = 0
+#     total = 0
+#     minimum = float('inf')
+
+#     for right in range(len(arr)):
+#         total += arr[right]
+
+#         while total > target:
+#             minimum = min(minimum, right - left + 1)
+#             total -= arr[left]
+#             left += 1
+
+#     return -1 if minimum == float('inf') else minimum
+
+
+# arr = [2, 1, 5, 2, 3, 2]
+# target = 7
+
+# print("Smallest Subarray Length:",
+#       smallest_subarray(arr, target))
