@@ -1,0 +1,76 @@
+#Code 1
+'''arr = list(map(int, input("Enter array elements: ").split()))
+
+arr.sort()
+
+result = []
+i, j = 0, len(arr) - 1
+
+while i <= j:
+    if i == j:
+        result.append(arr[i])
+    else:
+        result.append(arr[j])
+        result.append(arr[i])
+    i += 1
+    j -= 1
+
+total = sum(abs(result[k] - result[k - 1]) for k in range(1, len(result)))
+
+print("Rearranged array:", result)
+print("Maximum sum:", total)'''
+
+# Code 2
+'''arr = list(map(int, input("Enter numbers: ").split()))
+
+# Sort the array
+arr.sort()
+
+# Rearrange elements
+result = []
+
+left = 0
+right = len(arr) - 1
+
+while left <= right:
+    if left == right:
+        result.append(arr[left])
+    else:
+        result.append(arr[left])
+        result.append(arr[right])
+
+    left += 1
+    right -= 1
+
+# Calculate maximum sum of absolute differences
+total = 0
+
+for i in range(len(result) - 1):
+    total += abs(result[i] - result[i + 1])
+
+# Print output
+print("Rearranged array:", result)
+print("Maximum sum of absolute differences:", total)'''
+
+
+#Code3
+def smallest_subarray(arr, target):
+    left = 0
+    total = 0
+    ans = len(arr) + 1
+
+    for right in range(len(arr)):
+        total += arr[right]
+
+        while total > target:
+            ans = min(ans, right - left + 1)
+            total -= arr[left]
+            left += 1
+
+    return -1 if ans == len(arr) + 1 else ans
+
+
+arr = list(map(int, input().split()))
+target = 7
+
+print(smallest_subarray(arr, target))
