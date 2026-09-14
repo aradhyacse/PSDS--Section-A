@@ -1,0 +1,124 @@
+''' #1. Heap, Priority Queue & Heap Sort
+class MinHeap:
+    def __init__(self):
+        self.heap = []
+    def insert(self, value):
+        self.heap.append(value)
+        i = len(self.heap) - 1
+        while i > 0:
+            parent = (i - 1) // 2
+            if self.heap[parent] <= self.heap[i]:
+                break
+            self.heap[parent], self.heap[i] = \
+                self.heap[i], self.heap[parent]
+            i = parent
+    def delete_min(self):
+        if len(self.heap) == 0:
+            return None
+        minimum = self.heap[0]
+        last = self.heap.pop()
+        if len(self.heap) > 0:
+            self.heap[0] = last
+            i = 0
+            while True:
+                left = 2 * i + 1
+                right = 2 * i + 2
+                smallest = i
+                if left < len(self.heap) and \
+                   self.heap[left] < self.heap[smallest]:
+                    smallest = left
+                if right < len(self.heap) and \
+                   self.heap[right] < self.heap[smallest]:
+                    smallest = right
+                if smallest == i:
+                    break
+                self.heap[i], self.heap[smallest] = \
+                    self.heap[smallest], self.heap[i]
+                i = smallest
+        return minimum
+class PriorityQueue:
+    def __init__(self):
+        self.heap = MinHeap()
+    def enqueue(self, value):
+        self.heap.insert(value)
+    def dequeue(self):
+        return self.heap.delete_min()
+def heapify(arr, n, i):
+    largest = i
+    left = 2 * i + 1
+    right = 2 * i + 2
+    if left < n and arr[left] > arr[largest]:
+        largest = left
+    if right < n and arr[right] > arr[largest]:
+        largest = right
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        heapify(arr, n, largest)
+def heap_sort(arr):
+    n = len(arr)
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(arr, n, i)
+    for i in range(n - 1, 0, -1):
+        arr[0], arr[i] = arr[i], arr[0]
+        heapify(arr, i, 0)
+arr = list(map(int, input("Enter array elements: ").split()))
+heap_sort(arr)
+print("Heap Sorted Array:", arr)
+pq = PriorityQueue()
+n = int(input("Enter number of elements for Priority Queue: "))
+for i in range(n):
+    value = int(input("Enter element: "))
+    pq.enqueue(value)
+print("Priority Queue:", end=" ")
+while pq.heap.heap:
+    print(pq.dequeue(), end=" ")
+
+
+
+#2. Rearrange Array to Maximize Adjacent Sum Difference
+def maximize_difference(arr):
+    arr.sort()
+    n = len(arr)
+    result = []
+    left = 0
+    right = n - 1
+    while left <= right:
+        if left <= right:
+            result.append(arr[left])
+            left += 1
+        if left <= right:
+            result.append(arr[right])
+            right -= 1
+    total = 0
+    for i in range(1, n):
+        total += abs(result[i] - result[i - 1])
+    return result, total
+n = int(input("Enter number of elements: "))
+arr = list(map(int, input("Enter array elements: ").split()))
+result, total = maximize_difference(arr)
+print("Rearranged Array:", result)
+print("Sum of Absolute Differences:", total)
+
+
+
+#3. Smallest Subarray with Sum Greater Than Target
+def smallest_subarray(arr, target):
+    n = len(arr)
+    left = 0
+    current_sum = 0
+    min_length = float('inf')
+    for right in range(n):
+        current_sum += arr[right]
+        while current_sum > target:
+            length = right - left + 1
+            min_length = min(min_length, length)
+            current_sum -= arr[left]
+            left += 1
+    if min_length == float('inf'):
+        return -1
+    return min_length
+n = int(input("Enter number of elements: "))
+arr = list(map(int, input("Enter array elements: ").split()))
+target = int(input("Enter target: "))
+answer = smallest_subarray(arr, target)
+print("Smallest Subarray Length:", answer)'''
