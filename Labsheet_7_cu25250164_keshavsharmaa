@@ -1,0 +1,236 @@
+// Question 1
+
+// #include <iostream>
+// #include <vector>
+// using namespace std;
+
+// class MaxHeap {
+//     vector<int> heap;
+
+// public:
+//     void insert(int x) {
+//         heap.push_back(x);
+//         int i = heap.size() - 1;
+
+//         while (i > 0) {
+//             int p = (i - 1) / 2;
+
+//             if (heap[p] >= heap[i])
+//                 break;
+
+//             swap(heap[p], heap[i]);
+//             i = p;
+//         }
+//     }
+
+//     int removeMax() {
+//         int x = heap[0];
+//         heap[0] = heap.back();
+//         heap.pop_back();
+
+//         int i = 0;
+
+//         while (true) {
+//             int l = 2 * i + 1;
+//             int r = 2 * i + 2;
+//             int largest = i;
+
+//             if (l < heap.size() && heap[l] > heap[largest])
+//                 largest = l;
+
+//             if (r < heap.size() && heap[r] > heap[largest])
+//                 largest = r;
+
+//             if (largest == i)
+//                 break;
+
+//             swap(heap[i], heap[largest]);
+//             i = largest;
+//         }
+
+//         return x;
+//     }
+
+//     int top() {
+//         return heap[0];
+//     }
+
+//     bool empty() {
+//         return heap.empty();
+//     }
+
+//     void display() {
+//         for (int x : heap)
+//             cout << x << " ";
+//         cout << endl;
+//     }
+// };
+
+// void heapify(vector<int>& a, int n, int i) {
+//     int largest = i;
+//     int l = 2 * i + 1;
+//     int r = 2 * i + 2;
+
+//     if (l < n && a[l] > a[largest])
+//         largest = l;
+
+//     if (r < n && a[r] > a[largest])
+//         largest = r;
+
+//     if (largest != i) {
+//         swap(a[i], a[largest]);
+//         heapify(a, n, largest);
+//     }
+// }
+
+// void heapSort(vector<int>& a) {
+//     int n = a.size();
+
+//     for (int i = n / 2 - 1; i >= 0; i--)
+//         heapify(a, n, i);
+
+//     for (int i = n - 1; i > 0; i--) {
+//         swap(a[0], a[i]);
+//         heapify(a, i, 0);
+//     }
+// }
+
+// int main() {
+//     MaxHeap h;
+
+//     h.insert(40);
+//     h.insert(20);
+//     h.insert(50);
+//     h.insert(10);
+//     h.insert(30);
+
+//     cout << "Max Heap: ";
+//     h.display();
+
+//     cout << "Highest Priority: " << h.top() << endl;
+
+//     cout << "Removed: " << h.removeMax() << endl;
+
+//     cout << "Heap after removal: ";
+//     h.display();
+
+//     vector<int> a = {40, 10, 30, 50, 20};
+
+//     cout << "Before Sorting: ";
+//     for (int x : a)
+//         cout << x << " ";
+
+//     heapSort(a);
+
+//     cout << "\nAfter Heap Sort: ";
+//     for (int x : a)
+//         cout << x << " ";
+
+//     return 0;
+// }
+
+// Question 2
+
+// #include <iostream>
+// #include <algorithm>
+// using namespace std;
+
+// int main() {
+//     int n;
+//     cin >> n;
+
+//     int arr[n];
+//     for (int i = 0; i < n; i++)
+//         cin >> arr[i];
+
+//     sort(arr, arr + n);
+
+//     if (n == 1) {
+//         cout << "[" << arr[0] << "]" << endl;
+//         cout << "Sum = 0" << endl;
+//         return 0;
+//     }
+
+//     int m = (n % 2 == 0) ? n / 2 : (n + 1) / 2;
+//     int lowArr[m], highArr[n - m];
+
+//     for (int i = 0; i < m; i++) lowArr[i] = arr[i];
+//     for (int i = 0; i < n - m; i++) highArr[i] = arr[m + i];
+
+//     int lowEndCnt = 0, highEndCnt = 0;
+//     if (0 % 2 == 0) lowEndCnt++; else highEndCnt++;
+//     if ((n - 1) % 2 == 0) lowEndCnt++; else highEndCnt++;
+
+
+//     int le = m - lowEndCnt;   
+//     int li = 0;               
+//     int he = 0;               
+//     int hi = highEndCnt;      
+
+//     int arr1[n];
+//     for (int i = 0; i < n; i++) {
+//         bool endpoint = (i == 0 || i == n - 1);
+//         if (i % 2 == 0) {
+//             arr1[i] = endpoint ? lowArr[le++] : lowArr[li++];
+//         } else {
+//             arr1[i] = endpoint ? highArr[he++] : highArr[hi++];
+//         }
+//     }
+
+//     int sum = 0;
+//     cout << "[";
+//     for (int i = 0; i < n; i++) {
+//         cout << arr1[i];
+//         if (i < n - 1) {
+//             cout << ", ";
+//             sum += abs(arr1[i + 1] - arr1[i]);
+//         }
+//     }
+//     cout << "]" << endl;
+//     cout << "Sum = " << sum << endl;
+
+//     return 0;
+// }
+
+// Question 3
+
+// #include <iostream>
+// #include <algorithm>
+// using namespace std;
+
+// int main() {
+//     int n;
+//     cout << "Enter the number of elements: ";
+//     cin >> n;
+
+//     int arr[n];
+
+//     for (int i = 0; i < n; i++) {
+//         cout << "Enter element " << i + 1 << ": ";
+//         cin >> arr[i];
+//     }
+
+//     sort(arr, arr+n);
+
+//     int target;
+//     cout << "Please enter the target sum : ";
+//     cin >> target;
+
+//     for (int i = n-1; i >= 0; i--){
+//         int sum = 0;
+//         for (int j = i; j >= 0; j--){
+//             sum += arr[j];
+//             if (sum > target){
+//                 cout << "The smallest substring is : [";
+//                 for (int k = j; k <= i; k++){
+//                     cout << arr[k];
+//                     if (k < i) cout << ", ";
+//                 }
+//                 cout << "]" << endl;
+//                 return 0;
+//             }
+//         }
+//     }
+    
+//     return 0;
+// }
