@@ -1,0 +1,123 @@
+# LABSHEET 8 - QUESTION 1
+# Maximum Sum of Contiguous Subarray of Size K
+
+def maximum_sum(arr, k):
+
+    # Calculate sum of first K elements
+    window_sum = sum(arr[:k])
+
+    max_sum = window_sum
+
+    # Slide the window
+    for i in range(k, len(arr)):
+
+        # Remove the old element and add the new element
+        window_sum = window_sum - arr[i - k] + arr[i]
+
+        # Update maximum
+        max_sum = max(max_sum, window_sum)
+
+    return max_sum
+
+
+n = int(input("Enter N: "))
+k = int(input("Enter K: "))
+
+arr = list(map(int, input("Enter array elements: ").split()))
+
+result = maximum_sum(arr, k)
+
+print("Maximum Sum:", result)
+
+# # LABSHEET 8 - QUESTION 2
+# # Longest Substring Without Repeating Characters
+
+# def longest_substring(s):
+
+#     characters = set()
+
+#     left = 0
+#     max_length = 0
+
+#     for right in range(len(s)):
+
+#         # Remove characters until duplicate is removed
+#         while s[right] in characters:
+#             characters.remove(s[left])
+#             left += 1
+
+#         # Add current character
+#         characters.add(s[right])
+
+#         # Calculate current window length
+#         current_length = right - left + 1
+
+#         # Update maximum length
+#         max_length = max(max_length, current_length)
+
+#     return max_length
+
+
+# s = input("Enter string: ")
+
+# result = longest_substring(s)
+
+# print("Longest Substring Length:", result)
+
+
+# # LABSHEET 8 - QUESTION 3
+# # Shortest Path from Node 1 to Node N
+# # Using at most K edges
+
+# def shortest_path(n, m, k, edges):
+
+#     INF = float('inf')
+
+#     # dp[node][edges_used]
+#     dp = [[INF] * (k + 1) for _ in range(n + 1)]
+
+#     # Starting node
+#     dp[1][0] = 0
+
+#     # Try paths using 1, 2, ..., K edges
+#     for edges_used in range(k):
+
+#         for u, v, weight in edges:
+
+#             # u -> v
+#             if dp[u][edges_used] != INF:
+#                 dp[v][edges_used + 1] = min(
+#                     dp[v][edges_used + 1],
+#                     dp[u][edges_used] + weight
+#                 )
+
+#             # v -> u
+#             if dp[v][edges_used] != INF:
+#                 dp[u][edges_used + 1] = min(
+#                     dp[u][edges_used + 1],
+#                     dp[v][edges_used] + weight
+#                 )
+
+#     # Minimum cost to reach node N
+#     # using at most K edges
+#     answer = min(dp[n])
+
+#     if answer == INF:
+#         return -1
+
+#     return answer
+
+
+# n, m, k = map(int, input("Enter N, M, K: ").split())
+
+# edges = []
+
+# print("Enter edges (u v weight):")
+
+# for i in range(m):
+#     u, v, weight = map(int, input().split())
+#     edges.append((u, v, weight))
+
+# result = shortest_path(n, m, k, edges)
+
+# print("Minimum Path Weight:", result)
