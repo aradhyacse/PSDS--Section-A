@@ -1,0 +1,65 @@
+'''import heapq
+
+# Min Heap / Priority Queue
+h = []
+for x in [30, 10, 20, 5, 40]:
+    heapq.heappush(h, x)
+
+print("Min Heap:", h)
+print("Priority Queue Remove:", heapq.heappop(h))
+
+# Max Heap
+max_heap = []
+for x in [30, 10, 20, 5, 40]:
+    heapq.heappush(max_heap, -x)
+
+print("Max Heap:", [-x for x in max_heap])
+print("Maximum:", -heapq.heappop(max_heap))
+
+# Heap Sort
+arr = [30, 10, 20, 5, 40]
+heapq.heapify(arr)
+
+sorted_arr = [heapq.heappop(arr) for i in range(len(arr))]
+print("Heap Sorted Array:", sorted_arr)'''
+
+'''arr = list(map(int, input("Enter array elements: ").split()))
+
+arr.sort()
+
+result = []
+i, j = 0, len(arr) - 1
+
+while i <= j:
+    if i == j:
+        result.append(arr[i])
+    else:
+        result.append(arr[j])
+        result.append(arr[i])
+    i += 1
+    j -= 1
+
+total = sum(abs(result[k] - result[k - 1]) for k in range(1, len(result)))
+
+print("Rearranged array:", result)
+print("Maximum sum:", total)'''
+
+arr = list(map(int, input("Enter array: ").split()))
+target = int(input("Enter target: "))
+
+start = 0
+current_sum = 0
+min_len = float('inf')
+
+for end in range(len(arr)):
+    current_sum += arr[end]
+
+    while current_sum > target:
+        min_len = min(min_len, end - start + 1)
+        current_sum -= arr[start]
+        start += 1
+
+if min_len == float('inf'):
+    print(-1)
+else:
+    print("Smallest subarray length:", min_len)'''
