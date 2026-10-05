@@ -1,0 +1,22 @@
+def digit_sum(x):
+    total = 0
+    while x > 0:
+        total += x % 10
+        x //= 10
+    return total
+def solve(N, nums):
+    count = {}
+    for x in nums:
+        s = digit_sum(x)
+        if s in count:
+            count[s] += 1
+        else:
+            count[s] = 1
+        ans = 0
+    for value in count.values():
+        ans += value * value
+    return ans
+
+N = int(input())
+nums = list(map(int, input().split()))
+print(solve(N, nums))
