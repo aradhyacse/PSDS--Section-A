@@ -1,0 +1,347 @@
+// #include <iostream>
+// #include <stack>
+// #include <string>
+// #include <cctype>
+// using namespace std;
+
+// int precedence(char op)
+// {
+//     if (op == '+' || op == '-')
+//         return 1;
+
+//     if (op == '*' || op == '/')
+//         return 2;
+
+//     if (op == '^')
+//         return 3;
+
+//     return 0;
+// }
+
+// string infixToPostfix(string infix)
+// {
+//     stack<char> s;
+//     string postfix = "";
+
+//     for (char ch : infix)
+//     {
+//         if (isalnum(ch))
+//         {
+//             postfix += ch;
+//         }
+//         else if (ch == '(')
+//         {
+//             s.push(ch);
+//         }
+//         else if (ch == ')')
+//         {
+//             while (!s.empty() && s.top() != '(')
+//             {
+//                 postfix += s.top();
+//                 s.pop();
+//             }
+
+//             s.pop();
+//         }
+//         else
+//         {
+//             while (!s.empty() &&
+//                    precedence(s.top()) >= precedence(ch))
+//             {
+//                 postfix += s.top();
+//                 s.pop();
+//             }
+
+//             s.push(ch);
+//         }
+//     }
+
+//     while (!s.empty())
+//     {
+//         postfix += s.top();
+//         s.pop();
+//     }
+
+//     return postfix;
+// }
+
+// int main()
+// {
+//     string infix;
+
+//     cout << "Enter Infix Expression: ";
+//     cin >> infix;
+
+//     string postfix = infixToPostfix(infix);
+
+//     cout << "Postfix Expression: " << postfix << endl;
+
+//     return 0;
+// }
+
+// #include<iostream>
+// #include<stack>
+// #include<string>
+// #include<cmath>
+// using namespace std;
+ 
+// int evaluatepostfix(string postfix)
+// {
+//     stack<int> s;
+//     for(char ch : postfix)
+//     if(isdigit(ch))
+//     {
+//         s.push(ch - '0');
+//     }
+//     else{
+//         int operand2 = s.top();
+//         s.pop();
+//         int operand1 = s.top();
+//         s.pop();
+//         int result;
+//         switch(ch)
+//         {
+//             case '+':
+//             result = operand1 + operand2;
+//             break;
+//              case '-':
+//             result = operand1 - operand2;
+//             break;
+//              case '*':
+//             result = operand1 * operand2;
+//             break;
+//              case '/':
+//             result = operand1 / operand2;
+//             break;
+//              case '^':
+//             result = operand1 ^ operand2;
+//             break;
+//         }
+//         s.push(result);
+//     }
+// }
+// return s.top();
+// }
+// int main()
+// {
+//     string postfix;
+//     cout<<"enter postfix expresssion";
+//     cin>>postfix;
+//     int answer=evaluatepostfix(postfix);
+//     cout<<"result:"<<answer<<endl;
+// }
+
+#include <iostream>
+using namespace std;
+
+// Node structure
+struct Node
+{
+    int data;
+    Node* left;
+    Node* right;
+
+    Node(int value)
+    {
+        data = value;
+        left = NULL;
+        right = NULL;
+    }
+};
+
+// Insert a node into BST
+Node* insert(Node* root, int value)
+{
+    // If tree is empty
+    if (root == NULL)
+    {
+        return new Node(value);
+    }
+
+    // Smaller value goes to left
+    if (value < root->data)
+    {
+        root->left = insert(root->left, value);
+    }
+
+    // Greater value goes to right
+    else if (value > root->data)
+    {
+        root->right = insert(root->right, value);
+    }
+
+    return root;
+}
+
+// Find minimum value node
+Node* findMin(Node* root)
+{
+    while (root->left != NULL)
+    {
+        root = root->left;
+    }
+
+    return root;
+}
+
+// Delete a node from BST
+Node* deleteNode(Node* root, int value)
+{
+    // Value not found
+    if (root == NULL)
+    {
+        return root;
+    }
+
+    // Search in left subtree
+    if (value < root->data)
+    {
+        root->left = deleteNode(root->left, value);
+    }
+
+    // Search in right subtree
+    else if (value > root->data)
+    {
+        root->right = deleteNode(root->right, value);
+    }
+
+    // Node found
+    else
+    {
+        // Case 1: No child
+        if (root->left == NULL && root->right == NULL)
+        {
+            delete root;
+            return NULL;
+        }
+
+        // Case 2: Only right child
+        else if (root->left == NULL)
+        {
+            Node* temp = root->right;
+            delete root;
+            return temp;
+        }
+
+        // Case 2: Only left child
+        else if (root->right == NULL)
+        {
+            Node* temp = root->left;
+            delete root;
+            return temp;
+        }
+
+        // Case 3: Two children
+        else
+        {
+            Node* temp = findMin(root->right);
+
+            root->data = temp->data;
+
+            root->right = deleteNode(root->right, temp->data);
+        }
+    }
+
+    return root;
+}
+
+// Inorder Traversal
+void inorder(Node* root)
+{
+    if (root != NULL)
+    {
+        inorder(root->left);
+        cout << root->data << " ";
+        inorder(root->right);
+    }
+}
+
+// Preorder Traversal
+void preorder(Node* root)
+{
+    if (root != NULL)
+    {
+        cout << root->data << " ";
+        preorder(root->left);
+        preorder(root->right);
+    }
+}
+
+// Postorder Traversal
+void postorder(Node* root)
+{
+    if (root != NULL)
+    {
+        postorder(root->left);
+        postorder(root->right);
+        cout << root->data << " ";
+    }
+}
+
+// Main function
+int main()
+{
+    Node* root = NULL;
+
+    int choice, value;
+
+    do
+    {
+        cout << "\n\n===== BINARY SEARCH TREE =====";
+        cout << "\n1. Insert";
+        cout << "\n2. Delete";
+        cout << "\n3. Inorder Traversal";
+        cout << "\n4. Preorder Traversal";
+        cout << "\n5. Postorder Traversal";
+        cout << "\n6. Exit";
+
+        cout << "\nEnter your choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+            case 1:
+                cout << "Enter value to insert: ";
+                cin >> value;
+
+                root = insert(root, value);
+
+                cout << "Value inserted successfully.";
+                break;
+
+            case 2:
+                cout << "Enter value to delete: ";
+                cin >> value;
+
+                root = deleteNode(root, value);
+
+                cout << "Deletion operation completed.";
+                break;
+
+            case 3:
+                cout << "Inorder Traversal: ";
+                inorder(root);
+                break;
+
+            case 4:
+                cout << "Preorder Traversal: ";
+                preorder(root);
+                break;
+
+            case 5:
+                cout << "Postorder Traversal: ";
+                postorder(root);
+                break;
+
+            case 6:
+                cout << "Program ended.";
+                break;
+
+            default:
+                cout << "Invalid choice!";
+        }
+
+    } while (choice != 6);
+
+    return 0;
+}

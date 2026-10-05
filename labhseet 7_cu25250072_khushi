@@ -1,0 +1,475 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+// ================= MAX HEAP =================
+
+class MaxHeap {
+public:
+    vector<int> heap;
+
+    // Insert into Max Heap
+    void insert(int value) {
+        heap.push_back(value);
+
+        int i = heap.size() - 1;
+
+        // Move upward
+        while (i > 0) {
+            int parent = (i - 1) / 2;
+
+            if (heap[parent] >= heap[i])
+                break;
+
+            swap(heap[parent], heap[i]);
+
+            i = parent;
+        }
+    }
+
+    // Remove maximum element
+    int removeMax() {
+        if (heap.empty())
+            return -1;
+
+        int maximum = heap[0];
+
+        heap[0] = heap.back();
+        heap.pop_back();
+
+        int i = 0;
+
+        // Move downward
+        while (true) {
+            int left = 2 * i + 1;
+            int right = 2 * i + 2;
+            int largest = i;
+
+            if (left < heap.size() && heap[left] > heap[largest])
+                largest = left;
+
+            if (right < heap.size() && heap[right] > heap[largest])
+                largest = right;
+
+            if (largest == i)
+                break;
+
+            swap(heap[i], heap[largest]);
+
+            i = largest;
+        }
+
+        return maximum;
+    }
+
+    void display() {
+        for (int x : heap)
+            cout << x << " ";
+
+        cout << endl;
+    }
+};
+
+
+// ================= MIN HEAP =================
+
+class MinHeap {
+public:
+    vector<int> heap;
+
+    // Insert into Min Heap
+    void insert(int value) {
+        heap.push_back(value);
+
+        int i = heap.size() - 1;
+
+        // Move upward
+        while (i > 0) {
+            int parent = (i - 1) / 2;
+
+            if (heap[parent] <= heap[i])
+                break;
+
+            swap(heap[parent], heap[i]);
+
+            i = parent;
+        }
+    }
+
+    // Remove minimum element
+    int removeMin() {
+        if (heap.empty())
+            return -1;
+
+        int minimum = heap[0];
+
+        heap[0] = heap.back();
+        heap.pop_back();
+
+        int i = 0;
+
+        // Move downward
+        while (true) {
+            int left = 2 * i + 1;
+            int right = 2 * i + 2;
+            int smallest = i;
+
+            if (left < heap.size() && heap[left] < heap[smallest])
+                smallest = left;
+
+            if (right < heap.size() && heap[right] < heap[smallest])
+                smallest = right;
+
+            if (smallest == i)
+                break;
+
+            swap(heap[i], heap[smallest]);
+
+            i = smallest;
+        }
+
+        return minimum;
+    }
+
+    void display() {
+        for (int x : heap)
+            cout << x << " ";
+
+        cout << endl;
+    }
+};
+
+
+// ================= PRIORITY QUEUE =================
+
+class PriorityQueue {
+public:
+    MaxHeap pq;
+
+    // Higher value = higher priority
+    void push(int value) {
+        pq.insert(value);
+    }
+
+    // Remove highest priority element
+    int pop() {
+        return pq.removeMax();
+    }
+
+    void display() {
+        pq.display();
+    }
+};
+
+
+// ================= HEAP SORT =================
+
+// Heapify function
+void heapify(vector<int>& arr, int n, int i) {
+    int largest = i;
+
+    int left = 2 * i + 1;
+    int right = 2 * i + 2;
+
+    if (left < n && arr[left] > arr[largest])
+        largest = left;
+
+    if (right < n && arr[right] > arr[largest])
+        largest = right;
+
+    if (largest != i) {
+        swap(arr[i], arr[largest]);
+
+        heapify(arr, n, largest);
+    }
+}
+
+
+// Heap Sort function
+void heapSort(vector<int>& arr) {
+    int n = arr.size();
+
+    // Build Max Heap
+    for (int i = n / 2 - 1; i >= 0; i--)
+        heapify(arr, n, i);
+
+    // Extract elements one by one
+    for (int i = n - 1; i > 0; i--) {
+        swap(arr[0], arr[i]);
+
+        heapify(arr, i, 0);
+    }
+}
+
+
+// ================= MAIN =================
+
+int main() {
+
+    // ---------- MAX HEAP ----------
+    MaxHeap maxHeap;
+
+    maxHeap.insert(40);
+    maxHeap.insert(20);
+    maxHeap.insert(50);
+    maxHeap.insert(10);
+    maxHeap.insert(30);
+
+    cout << "Max Heap: ";
+    maxHeap.display();
+
+    cout << "Removed from Max Heap: "
+         << maxHeap.removeMax() << endl;
+
+    cout << "Max Heap after deletion: ";
+    maxHeap.display();
+
+
+    // ---------- MIN HEAP ----------
+    MinHeap minHeap;
+
+    minHeap.insert(40);
+    minHeap.insert(20);
+    minHeap.insert(50);
+    minHeap.insert(10);
+    minHeap.insert(30);
+
+    cout << "\nMin Heap: ";
+    minHeap.display();
+
+    cout << "Removed from Min Heap: "
+         << minHeap.removeMin() << endl;
+
+    cout << "Min Heap after deletion: ";
+    minHeap.display();
+
+
+    // ---------- PRIORITY QUEUE ----------
+    PriorityQueue pq;
+
+    pq.push(40);
+    pq.push(20);
+    pq.push(50);
+    pq.push(10);
+    pq.push(30);
+
+    cout << "\nPriority Queue: ";
+    pq.display();
+
+    cout << "Highest Priority Element: "
+         << pq.pop() << endl;
+
+    cout << "Priority Queue after deletion: ";
+    pq.display();
+
+
+    // ---------- HEAP SORT ----------
+    vector<int> arr = {40, 10, 30, 50, 20};
+
+    cout << "\nArray before Heap Sort: ";
+
+    for (int x : arr)
+        cout << x << " ";
+
+    cout << endl;
+
+    heapSort(arr);
+
+    cout << "Array after Heap Sort: ";
+
+    for (int x : arr)
+        cout << x << " ";
+
+    cout << endl;
+
+
+    return 0;
+}
+
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstdlib>
+
+using namespace std;
+
+// Calculate sum of absolute differences
+long long calculateSum(const vector<long long>& arr) {
+    long long sum = 0;
+
+    for (int i = 0; i < arr.size() - 1; i++) {
+        sum += abs(arr[i] - arr[i + 1]);
+    }
+
+    return sum;
+}
+
+// Construct one possible maximum arrangement
+vector<long long> buildArrangement(vector<long long> arr, int startSign) {
+
+    int n = arr.size();
+
+    // Sort the values
+    sort(arr.begin(), arr.end());
+
+    // coefficient of every position
+    vector<int> coefficient(n);
+
+    // Signs of adjacent differences
+    vector<int> sign(n - 1);
+
+    for (int i = 0; i < n - 1; i++) {
+        if (i % 2 == 0)
+            sign[i] = startSign;
+        else
+            sign[i] = -startSign;
+    }
+
+    // Calculate coefficients
+    coefficient[0] = sign[0];
+
+    for (int i = 1; i < n - 1; i++) {
+        coefficient[i] = sign[i] - sign[i - 1];
+    }
+
+    coefficient[n - 1] = -sign[n - 2];
+
+    // Store coefficient and its position
+    vector<pair<int, int>> positions;
+
+    for (int i = 0; i < n; i++) {
+        positions.push_back({coefficient[i], i});
+    }
+
+    // Smallest values go with smallest coefficients
+    sort(positions.begin(), positions.end());
+
+    vector<long long> result(n);
+
+    for (int i = 0; i < n; i++) {
+        int position = positions[i].second;
+        result[position] = arr[i];
+    }
+
+    return result;
+}
+
+int main() {
+
+    int n;
+
+    cout << "Enter number of elements: ";
+    cin >> n;
+
+    vector<long long> arr(n);
+
+    cout << "Enter elements: ";
+
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+
+    // Handle n = 1
+    if (n == 1) {
+        cout << "Rearranged Array: " << arr[0] << endl;
+        cout << "Maximum Sum: 0" << endl;
+        return 0;
+    }
+
+    // Try both possible alternating patterns
+    vector<long long> arrangement1 =
+        buildArrangement(arr, 1);
+
+    vector<long long> arrangement2 =
+        buildArrangement(arr, -1);
+
+    long long sum1 = calculateSum(arrangement1);
+    long long sum2 = calculateSum(arrangement2);
+
+    vector<long long> answer;
+
+    if (sum1 >= sum2) {
+        answer = arrangement1;
+    }
+    else {
+        answer = arrangement2;
+    }
+
+    long long maximumSum = calculateSum(answer);
+
+    cout << "\nRearranged Array: ";
+
+    for (long long x : answer) {
+        cout << x << " ";
+    }
+
+    cout << endl;
+
+    cout << "Maximum Sum of Absolute Differences: "
+         << maximumSum << endl;
+
+    return 0;
+}
+
+#include <iostream>
+#include <vector>
+#include <climits>
+using namespace std;
+
+int smallestSubarray(vector<int>& arr, int target) {
+
+    int left = 0;
+    long long sum = 0;
+    int minLength = INT_MAX;
+
+    for (int right = 0; right < arr.size(); right++) {
+
+        // Add current element
+        sum += arr[right];
+
+        // Shrink window while sum is greater than target
+        while (sum > target) {
+
+            int length = right - left + 1;
+
+            minLength = min(minLength, length);
+
+            // Remove left element
+            sum -= arr[left];
+            left++;
+        }
+    }
+
+    if (minLength == INT_MAX)
+        return -1;
+
+    return minLength;
+}
+
+int main() {
+
+    int n;
+
+    cout << "Enter number of elements: ";
+    cin >> n;
+
+    vector<int> arr(n);
+
+    cout << "Enter elements: ";
+
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+
+    int target;
+
+    cout << "Enter target: ";
+    cin >> target;
+
+    int answer = smallestSubarray(arr, target);
+
+    cout << "Smallest Subarray Length: " << answer << endl;
+
+    return 0;
+}

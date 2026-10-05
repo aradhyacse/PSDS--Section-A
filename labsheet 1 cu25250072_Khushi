@@ -1,0 +1,181 @@
+//PUSH AND POP
+// #include <iostream>
+// #include <vector>
+// using namespace std;
+
+// int main() {
+//     vector<int> arr = {1, 2, 3};
+
+//     // Push
+//     arr.push_back(4);
+//     cout << "After push: ";
+//     for (int x : arr)
+//         cout << x << " ";
+//     cout << endl;
+
+//     // Pop
+//     arr.pop_back();
+//     cout << "After pop: ";
+//     for (int x : arr)
+//         cout << x << " ";
+//     cout << endl;
+
+//     // Pop all elements
+//     arr = {10, 20, 30, 40, 50};
+
+//     while (!arr.empty()) {
+//         int popElement = arr.back();
+//         cout << "Popping this item: " << popElement << endl;
+
+//         arr.pop_back();
+
+//         cout << "Array after pop: ";
+//         for (int x : arr)
+//             cout << x << " ";
+//         cout << endl;
+//     }
+
+//     return 0;
+// }
+// QUEUE AND DEQUEUE
+// #include <iostream>
+// #include <queue>
+// using namespace std;
+
+// int main() {
+//     queue<int> q;
+
+//     q.push(10);
+//     q.push(20);
+//     q.push(30);
+
+//     cout << "Original Queue: ";
+//     queue<int> temp = q;
+//     while (!temp.empty()) {
+//         cout << temp.front() << " ";
+//         temp.pop();
+//     }
+//     cout << endl;
+
+//     // Enqueue Operation
+//     q.push(40);
+
+//     cout << "After Enqueue: ";
+//     temp = q;
+//     while (!temp.empty()) {
+//         cout << temp.front() << " ";
+//         temp.pop();
+//     }
+//     cout << endl;
+
+//     // Dequeue Operation
+//     int dequeuedItem = q.front();
+//     cout << "Dequeued Item: " << dequeuedItem << endl;
+
+//     q.pop();
+
+//     cout << "After Dequeue: ";
+//     temp = q;
+//     while (!temp.empty()) {
+//         cout << temp.front() << " ";
+//         temp.pop();
+//     }
+//     cout << endl;
+
+//     return 0;
+// }
+// LINEAR SEARCH
+// #include <iostream>
+// #include <vector>
+// using namespace std;
+
+// int linearSearch(vector<int> arr, int key) {
+//     int n = arr.size();
+
+//     for (int i = 0; i < n; i++) {
+//         if (arr[i] == key) {
+//             return i;
+//         }
+//     }
+
+//     return -1;
+// }
+
+// int main() {
+//     int n, key;
+
+//     cout << "Enter number of elements: ";
+//     cin >> n;
+
+//     vector<int> arr(n);
+
+//     cout << "Enter the elements: ";
+//     for (int i = 0; i < n; i++) {
+//         cin >> arr[i];
+//     }
+
+//     cout << "Enter the element to search: ";
+//     cin >> key;
+
+//     int result = linearSearch(arr, key);
+
+//     if (result != -1) {
+//         cout << "Element found at index: " << result << endl;
+//     } else {
+//         cout << "Element not found" << endl;
+//     }
+
+//     return 0;
+// }
+// BINARY SEARCH
+// #include <iostream>
+// #include <vector>
+// using namespace std;
+
+// int binarySearch(vector<int> arr, int key) {
+//     int low = 0;
+//     int high = arr.size() - 1;
+
+//     while (low <= high) {
+//         int mid = low + (high - low) / 2;
+
+//         if (arr[mid] == key) {
+//             return mid;
+//         }
+//         else if (arr[mid] < key) {
+//             low = mid + 1;
+//         }
+//         else {
+//             high = mid - 1;
+//         }
+//     }
+
+//     return -1;
+// }
+
+// int main() {
+//     int n, key;
+
+//     cout << "Enter number of elements: ";
+//     cin >> n;
+
+//     vector<int> arr(n);
+
+//     cout << "Enter the elements in sorted order: ";
+//     for (int i = 0; i < n; i++) {
+//         cin >> arr[i];
+//     }
+
+//     cout << "Enter the element to search: ";
+//     cin >> key;
+
+//     int result = binarySearch(arr, key);
+
+//     if (result != -1) {
+//         cout << "Element found at index: " << result << endl;
+//     } else {
+//         cout << "Element not found" << endl;
+//     }
+
+//     return 0;
+// }
