@@ -1,0 +1,69 @@
+#Q1:
+def max_sum_subarray(arr, k):
+    # Sum of first window
+    window_sum = sum(arr[:k])
+    max_sum = window_sum
+
+    # Slide the window
+    for i in range(k, len(arr)):
+        window_sum += arr[i] - arr[i - k]
+        max_sum = max(max_sum, window_sum)
+
+    return max_sum
+
+
+# Input
+n, k = map(int, input().split())
+arr = list(map(int, input().split()))
+
+# Output
+print(max_sum_subarray(arr, k))
+
+#Q2:
+s = input()
+
+seen = set()
+left = 0
+maximum = 0
+
+for right in range(len(s)):
+    while s[right] in seen:
+        seen.remove(s[left])
+        left += 1
+
+    seen.add(s[right])
+    maximum = max(maximum, right - left + 1)
+
+print(maximum)
+
+#Q3:
+INF = float('inf')
+
+n, m, k = map(int, input().split())
+
+edges = []
+
+for _ in range(m):
+    u, v, w = map(int, input().split())
+    edges.append((u, v, w))
+
+# dp[node] = minimum cost to reach node
+dp = [INF] * (n + 1)
+dp[1] = 0
+
+for _ in range(k):
+    new_dp = dp.copy()
+
+    for u, v, w in edges:
+        if dp[u] != INF:
+            new_dp[v] = min(new_dp[v], dp[u] + w)
+
+        if dp[v] != INF:
+            new_dp[u] = min(new_dp[u], dp[v] + w)
+
+    dp = new_dp
+
+if dp[n] == INF:
+    print(-1)
+else:
+    print(dp[n])
