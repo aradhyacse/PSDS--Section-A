@@ -1,0 +1,110 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int n, k;
+    cout << "Enter n: ";
+    cin >> n;
+
+    cout << "Enter k: ";
+    cin >> k;
+
+    vector<int> a(n);
+    cout << "Enter array elements: ";
+    for (int &x : a) cin >> x;
+
+    long long sum = 0;
+
+    for (int i = 0; i < k; i++)
+        sum += a[i];
+
+    long long ans = sum;
+
+    for (int i = k; i < n; i++) {
+        sum += a[i] - a[i - k];
+        ans = max(ans, sum);
+    }
+
+    cout << "Maximum sum = " << ans;
+
+    return 0;
+}
+
+// #include <iostream>
+// #include <string>
+// #include <algorithm>
+// using namespace std;
+
+// int main() {
+//     string s;
+//     cout << "Enter string: ";
+//     cin >> s;
+
+//     int last[26] = {0};
+//     int left = 0, ans = 0;
+
+//     for (int right = 0; right < s.length(); right++) {
+//         int x = s[right] - 'a';
+
+//         left = max(left, last[x]);
+//         ans = max(ans, right - left + 1);
+
+//         last[x] = right + 1;
+//     }
+
+//     cout << "Longest length = " << ans;
+
+//     return 0;
+// }
+
+// #include <iostream>
+// #include <vector>
+// #include <climits>
+// #include <algorithm>
+// using namespace std;
+
+// struct Edge {
+//     int u, v, w;
+// };
+
+// int main() {
+//     int n, m, k;
+//     cout << "Enter n, m, k: ";
+//     cin >> n >> m >> k;
+
+//     vector<Edge> edges(m);
+
+//     cout << "Enter edges (u v weight):\n";
+//     for (auto &e : edges)
+//         cin >> e.u >> e.v >> e.w;
+
+//     const long long INF = LLONG_MAX / 4;
+//     vector<long long> dp(n + 1, INF);
+//     dp[1] = 0;
+
+//     long long ans = INF;
+
+//     for (int i = 1; i <= k; i++) {
+//         vector<long long> next = dp;
+
+//         for (auto e : edges) {
+//             if (dp[e.u] != INF)
+//                 next[e.v] = min(next[e.v], dp[e.u] + e.w);
+
+//             if (dp[e.v] != INF)
+//                 next[e.u] = min(next[e.u], dp[e.v] + e.w);
+//         }
+
+//         dp = next;
+//         ans = min(ans, dp[n]);
+//     }
+
+//     if (ans == INF)
+//         cout << "Minimum path weight = -1";
+//     else
+//         cout << "Minimum path weight = " << ans;
+
+//     return 0;
+// }
