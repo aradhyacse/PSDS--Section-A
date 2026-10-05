@@ -1,0 +1,73 @@
+'''n, k = map(int, input().split())
+arr = list(map(int, input().split()))
+
+current_sum = sum(arr[:k])
+max_sum = current_sum
+
+for i in range(k, n):
+    current_sum = current_sum - arr[i - k] + arr[i]
+    max_sum = max(max_sum, current_sum)
+
+print(max_sum)'''
+'''s = input("Enter a string: ").strip()
+
+last_seen = {}
+left = 0
+max_length = 0
+
+for right in range(len(s)):
+    char = s[right]
+
+    if char in last_seen and last_seen[char] >= left:
+        left = last_seen[char] + 1
+
+    last_seen[char] = right
+
+    max_length = max(max_length, right - left + 1)
+
+print("Length of longest substring without repeating characters:", max_length)'''
+'''import heapq
+
+n, m, k = map(int, input("Enter N, M and K: ").split())
+
+graph = [[] for _ in range(n + 1)]
+
+print("Enter edges (u v weight):")
+
+for _ in range(m):
+    u, v, w = map(int, input().split())
+    graph[u].append((v, w))
+    graph[v].append((u, w))
+
+INF = float('inf')
+
+dist = [[INF] * (k + 1) for _ in range(n + 1)]
+dist[1][0] = 0
+
+pq = [(0, 1, 0)]
+
+while pq:
+    cost, node, edges_used = heapq.heappop(pq)
+
+    if cost > dist[node][edges_used]:
+        continue
+
+    if node == n:
+        print("Minimum path weight:", cost)
+        break
+
+    if edges_used == k:
+        continue
+
+    for neighbor, weight in graph[node]:
+        new_cost = cost + weight
+        new_edges = edges_used + 1
+
+        if new_cost < dist[neighbor][new_edges]:
+            dist[neighbor][new_edges] = new_cost
+            heapq.heappush(
+                pq, (new_cost, neighbor, new_edges)
+            )
+
+else:
+    print("Minimum path weight: -1")'''
