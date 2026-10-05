@@ -1,0 +1,22 @@
+'''def solve(N, nums):
+    digit_count = {}
+    pairs = 0
+
+    for num in nums:
+        digit_sum = sum(int(digit) for digit in str(abs(num)))
+
+        if digit_sum in digit_count:
+            pairs += digit_count[digit_sum]
+            digit_count[digit_sum] += 1
+        else:
+            digit_count[digit_sum] = 1
+
+    return pairs
+
+
+N = int(input("Enter the size of array: "))
+nums = list(map(int, input("Enter array elements: ").split()))
+
+result = solve(N, nums)
+
+print("Total number of special pairs:", result)'''
