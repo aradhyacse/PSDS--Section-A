@@ -1,0 +1,292 @@
+#Q1:
+# ---------------- MIN HEAP ----------------
+
+class MinHeap:
+    def __init__(self):
+        self.heap = []
+
+    def insert(self, value):
+        self.heap.append(value)
+        self.heapify_up(len(self.heap) - 1)
+
+    def heapify_up(self, index):
+        while index > 0:
+            parent = (index - 1) // 2
+
+            if self.heap[parent] <= self.heap[index]:
+                break
+
+            self.heap[parent], self.heap[index] = \
+                self.heap[index], self.heap[parent]
+
+            index = parent
+
+    def extract_min(self):
+        if not self.heap:
+            return None
+
+        if len(self.heap) == 1:
+            return self.heap.pop()
+
+        minimum = self.heap[0]
+        self.heap[0] = self.heap.pop()
+        self.heapify_down(0)
+
+        return minimum
+
+    def heapify_down(self, index):
+        n = len(self.heap)
+
+        while True:
+            smallest = index
+            left = 2 * index + 1
+            right = 2 * index + 2
+
+            if left < n and self.heap[left] < self.heap[smallest]:
+                smallest = left
+
+            if right < n and self.heap[right] < self.heap[smallest]:
+                smallest = right
+
+            if smallest == index:
+                break
+
+            self.heap[index], self.heap[smallest] = \
+                self.heap[smallest], self.heap[index]
+
+            index = smallest
+
+    def display(self):
+        print(self.heap)
+
+
+# ---------------- MAX HEAP ----------------
+
+class MaxHeap:
+    def __init__(self):
+        self.heap = []
+
+    def insert(self, value):
+        self.heap.append(value)
+        self.heapify_up(len(self.heap) - 1)
+
+    def heapify_up(self, index):
+        while index > 0:
+            parent = (index - 1) // 2
+
+            if self.heap[parent] >= self.heap[index]:
+                break
+
+            self.heap[parent], self.heap[index] = \
+                self.heap[index], self.heap[parent]
+
+            index = parent
+
+    def extract_max(self):
+        if not self.heap:
+            return None
+
+        if len(self.heap) == 1:
+            return self.heap.pop()
+
+        maximum = self.heap[0]
+        self.heap[0] = self.heap.pop()
+        self.heapify_down(0)
+
+        return maximum
+
+    def heapify_down(self, index):
+        n = len(self.heap)
+
+        while True:
+            largest = index
+            left = 2 * index + 1
+            right = 2 * index + 2
+
+            if left < n and self.heap[left] > self.heap[largest]:
+                largest = left
+
+            if right < n and self.heap[right] > self.heap[largest]:
+                largest = right
+
+            if largest == index:
+                break
+
+            self.heap[index], self.heap[largest] = \
+                self.heap[largest], self.heap[index]
+
+            index = largest
+
+    def display(self):
+        print(self.heap)
+
+
+# ---------------- PRIORITY QUEUE ----------------
+
+class PriorityQueue:
+    def __init__(self):
+        self.heap = MinHeap()
+
+    def enqueue(self, value):
+        self.heap.insert(value)
+
+    def dequeue(self):
+        return self.heap.extract_min()
+
+    def display(self):
+        self.heap.display()
+
+
+# ---------------- HEAP SORT ----------------
+
+def heapify(arr, n, i):
+    largest = i
+    left = 2 * i + 1
+    right = 2 * i + 2
+
+    if left < n and arr[left] > arr[largest]:
+        largest = left
+
+    if right < n and arr[right] > arr[largest]:
+        largest = right
+
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        heapify(arr, n, largest)
+
+
+def heap_sort(arr):
+    n = len(arr)
+
+    # Build Max Heap
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(arr, n, i)
+
+    # Sort
+    for i in range(n - 1, 0, -1):
+        arr[0], arr[i] = arr[i], arr[0]
+        heapify(arr, i, 0)
+
+    return arr
+
+
+# ---------------- MAIN PROGRAM ----------------
+
+print("MIN HEAP")
+min_heap = MinHeap()
+
+for x in [5, 3, 8, 1, 2]:
+    min_heap.insert(x)
+
+min_heap.display()
+print("Minimum:", min_heap.extract_min())
+min_heap.display()
+
+
+print("\nMAX HEAP")
+max_heap = MaxHeap()
+
+for x in [5, 3, 8, 1, 2]:
+    max_heap.insert(x)
+
+max_heap.display()
+print("Maximum:", max_heap.extract_max())
+max_heap.display()
+
+
+print("\nPRIORITY QUEUE")
+pq = PriorityQueue()
+
+for x in [5, 1, 4, 2, 3]:
+    pq.enqueue(x)
+
+pq.display()
+print("Removed:", pq.dequeue())
+pq.display()
+
+
+print("\nHEAP SORT")
+arr = [12, 11, 13, 5, 6, 7]
+
+print("Original:", arr)
+print("Sorted:", heap_sort(arr))
+
+#Q2
+def maximize_difference(arr):
+    n = len(arr)
+
+    if n <= 1:
+        return arr, 0
+
+    if n == 2:
+        return arr, abs(arr[0] - arr[1])
+
+    arr.sort()
+
+    m = (n + 1) // 2
+
+    low = arr[:m]
+    high = arr[m:]
+
+    result = []
+
+    result.append(low[-1])
+
+    for x in high:
+        result.append(x)
+
+        if len(result) < n:
+            result.append(low.pop(0))
+
+    if low:
+        result.append(low[0])
+
+    total = 0
+
+    for i in range(1, len(result)):
+        total += abs(result[i] - result[i - 1])
+
+    return result, total
+
+arr = [5,6,7,4,8,9]
+
+result, total = maximize_difference(arr)
+
+print("Original Array:", arr)
+print("Rearranged Array:", result)
+print("Maximum Sum of Differences:", total)
+
+#Q3
+def smallest_subarray(arr, target):
+    
+    left = 0
+    current_sum = 0
+    min_length = float('inf')
+
+    for right in range(len(arr)):
+
+        
+        current_sum += arr[right]
+
+        while current_sum > target:
+
+            window_length = right - left + 1
+            min_length = min(min_length, window_length)
+
+            current_sum -= arr[left]
+            left += 1
+
+    if min_length == float('inf'):
+        return -1
+
+    return min_length
+
+arr = [2, 5 ,7, 8, 9, 3, 2]
+target = 7
+
+answer = smallest_subarray(arr, target)
+
+
+print("Array:", arr)
+print("Target:", target)
+print("Smallest Subarray Length:", answer)
