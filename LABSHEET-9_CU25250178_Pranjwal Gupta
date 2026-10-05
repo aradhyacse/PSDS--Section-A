@@ -1,0 +1,21 @@
+def solve():
+    N = int(input())
+    A = list(map(int, input().split()))
+
+    total = sum(A)
+    positive = sum(x for x in A if x > 0)
+    negative = sum(-x for x in A if x < 0)
+
+    if total > 0:
+        return -1
+
+    if 2 * positive > negative:
+        return -1
+
+    return -total
+
+
+T = int(input())
+
+for _ in range(T):
+    print(solve())
