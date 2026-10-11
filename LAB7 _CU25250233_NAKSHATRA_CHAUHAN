@@ -1,0 +1,75 @@
+import heapq
+
+# Priority Queue (Max Heap)
+heap = []
+
+for x in [30, 10, 50, 20, 40]:
+    heapq.heappush(heap, -x)
+
+print("Priority Queue Order:", end=" ")
+while heap:
+    print(-heapq.heappop(heap), end=" ")
+
+# Heap Sort (Min Heap)
+arr = [40, 10, 30, 50, 20]
+heap = []
+
+for x in arr:
+    heapq.heappush(heap, x)
+
+sorted_arr = []
+
+while heap:
+    sorted_arr.append(heapq.heappop(heap))
+
+print("\nSorted Array:", sorted_arr)
+
+-------------------------------------------------
+
+n = int(input())
+arr = list(map(int, input().split()))
+
+arr.sort()
+
+ans = []
+left = 0
+right = n - 1
+
+while left <= right:
+    ans.append(arr[left])
+    left += 1
+
+    if left <= right:
+        ans.append(arr[right])
+        right -= 1
+
+total = 0
+
+for i in range(1, n):
+    total += abs(ans[i] - ans[i - 1])
+
+print("Rearranged Array:", ans)
+print("Total Sum:", total)
+
+---------------------------------------------------
+
+n = int(input())
+arr = list(map(int, input().split()))
+target = int(input())
+
+left = 0
+current_sum = 0
+min_length = n + 1
+
+for right in range(n):
+    current_sum += arr[right]
+
+    while current_sum > target:
+        min_length = min(min_length, right - left + 1)
+        current_sum -= arr[left]
+        left += 1
+
+if min_length == n + 1:
+    print(-1)
+else:
+    print("Smallest Subarray Length:", min_length)
