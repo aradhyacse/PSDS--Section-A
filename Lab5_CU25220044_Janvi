@@ -1,0 +1,61 @@
+```python
+def infix_to_postfix(expression):
+    stack = []
+    result = ""
+
+    precedence = {'+': 1, '-': 1, '*': 2, '/': 2, '^': 3}
+
+    for char in expression:
+        if char.isalnum():
+            result += char
+
+        elif char == '(':
+            stack.append(char)
+
+        elif char == ')':
+            while stack and stack[-1] != '(':
+                result += stack.pop()
+            stack.pop()
+
+        else:
+            while (stack and stack[-1] != '(' and
+                   precedence.get(stack[-1], 0) >= precedence.get(char, 0)):
+                result += stack.pop()
+            stack.append(char)
+
+    while stack:
+        result += stack.pop()
+
+    return result
+
+
+expression = input("Enter infix expression: ")
+print("Postfix expression:", infix_to_postfix(expression))
+```
+```python
+def evaluate_postfix(expression):
+    stack = []
+
+    for char in expression:
+        if char.isdigit():
+            stack.append(int(char))
+
+        elif char in "+-*/":
+            b = stack.pop()
+            a = stack.pop()
+
+            if char == '+':
+                stack.append(a + b)
+            elif char == '-':
+                stack.append(a - b)
+            elif char == '*':
+                stack.append(a * b)
+            elif char == '/':
+                stack.append(a / b)
+
+    return stack.pop()
+
+
+expression = input("Enter postfix expression: ")
+print("Result:", evaluate_postfix(expression))
+```
