@@ -1,0 +1,14 @@
+def solve():
+    T = int(input())
+
+    for _ in range(T):
+        N, K = map(int, input().split())
+        A = list(map(int, input().split()))
+
+        A.sort(key=lambda x: ((x ^ K).bit_count(), x))
+
+        print(*A)
+
+
+if __name__ == "__main__":
+    solve()
