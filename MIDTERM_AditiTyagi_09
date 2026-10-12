@@ -1,0 +1,15 @@
+num = int(input("Enter the number of test cases: "))
+for i in range(num):
+    s = input("Enter a string: ")
+    count = 0
+    used = []
+    for i in range(len(s)):
+        if i in used:
+            continue
+        for j in range(i + 1, len(s)):
+            if j not in used and s[i] == s[j]:
+                count += 1
+                used.append(i)
+                used.append(j)
+                break
+    print("Maximum number of palindromic subsequences:", count)
