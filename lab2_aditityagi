@@ -1,0 +1,56 @@
+//linear search
+#include <iostream>
+using namespace std;
+int main()
+{
+    int arr[5] = {23, 56, 67, 54, 78};
+    int key;
+    bool found = false;
+    cout << "Enter element to search: ";
+    cin >> key;
+    for (int i = 0; i < 5; i++)
+    {
+        if (arr[i] == key)
+        {
+            cout << "Element found at index " << i << endl;
+            found = true;
+            break;
+        }
+    }
+    if (!found)
+    {
+        cout << "Element not found." << endl;
+    }
+    return 0;
+}
+
+
+//binary search
+#include <iostream>
+using namespace std;
+int main(){
+    int arr[5] = {10, 20, 30, 40, 50};
+    int key;
+    int low = 0;
+    int high = 4;
+    bool found = false;
+    cout << "Enter element to search: ";
+    cin >> key;
+    while (low <= high){
+        int mid = (low + high) / 2;
+        if (arr[mid] == key){
+            cout << "Element found at index " << mid << endl;
+            found = true;
+            break;
+        }
+        else if (key < arr[mid]){
+            high = mid - 1;
+        }
+        else{
+            low = mid + 1;
+        }
+    }
+    if (!found){
+        cout << "Element not found." << endl;
+    }
+    return 0;}
