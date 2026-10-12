@@ -1,0 +1,20 @@
+def hamming_distance(a, b):
+    # XOR leaves a 1 wherever the bits differ; count those 1s
+    return bin(a ^ b).count("1")
+
+
+def solve(n, x, arr):
+    # Sort by Hamming distance from x, break ties by numeric value
+    return sorted(arr, key=lambda v: (hamming_distance(v, x), v))
+
+
+def main():
+    t = int(input())
+    for _ in range(t):
+        n, x = map(int, input().split())
+        arr = list(map(int, input().split()))
+        print(*solve(n, x, arr))
+
+
+if __name__ == "__main__":
+    main()
