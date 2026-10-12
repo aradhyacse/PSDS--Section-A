@@ -1,0 +1,34 @@
+# STACK OPERATIONS
+
+stack = []
+
+# Push elements
+stack.append(10)
+stack.append(20)
+stack.append(30)
+
+print("Stack after push:", stack)
+
+# Pop element
+popped_item = stack.pop()
+
+print("Popped item:", popped_item)
+print("Stack after pop:", stack)
+
+
+# QUEUE OPERATIONS
+
+queue = []
+
+# Enqueue elements
+queue.append(10)
+queue.append(20)
+queue.append(30)
+
+print("\nQueue after enqueue:", queue)
+
+# Dequeue element
+dequeued_item = queue.pop(0)
+
+print("Dequeued item:", dequeued_item)
+print("Queue after dequeue:", queue)
