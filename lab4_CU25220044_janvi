@@ -1,0 +1,232 @@
+```sql
+-- 1. Create Database
+CREATE DATABASE CollegeDB;
+
+-- Select Database
+USE CollegeDB;
+
+
+-- 2. Create Department Table
+CREATE TABLE Department (
+    dept_id INT PRIMARY KEY,
+    dept_name VARCHAR(50) NOT NULL,
+    hod_name VARCHAR(50)
+);
+
+-- Insert Departments
+INSERT INTO Department VALUES
+(101, 'Computer Science', 'Dr. Sharma'),
+(102, 'Artificial Intelligence', 'Dr. Verma'),
+(103, 'Mechanical Engineering', 'Dr. Singh'),
+(104, 'Civil Engineering', 'Dr. Gupta');
+
+
+-- 3. Create Student Table
+CREATE TABLE Student (
+    student_id INT PRIMARY KEY,
+    student_name VARCHAR(50) NOT NULL,
+    age INT,
+    gender VARCHAR(10),
+    email VARCHAR(100) UNIQUE,
+    city VARCHAR(50),
+    dept_id INT,
+    FOREIGN KEY (dept_id) REFERENCES Department(dept_id)
+);
+
+-- Insert Students
+INSERT INTO Student VALUES
+(1, 'Janavi Singh', 20, 'Female', 'janavi@gmail.com', 'Varanasi', 101),
+(2, 'Amrita Sharma', 19, 'Female', 'amrita@gmail.com', 'Delhi', 102),
+(3, 'Palak Verma', 20, 'Female', 'palak@gmail.com', 'Roorkee', 101),
+(4, 'Apeksha Gupta', 19, 'Female', 'apeksha@gmail.com', 'Haridwar', 103),
+(5, 'Rahul Kumar', 21, 'Male', 'rahul@gmail.com', 'Dehradun', 104);
+
+
+-- 4. Create Faculty Table
+CREATE TABLE Faculty (
+    faculty_id INT PRIMARY KEY,
+    faculty_name VARCHAR(50) NOT NULL,
+    salary DECIMAL(10,2),
+    dept_id INT,
+    FOREIGN KEY (dept_id) REFERENCES Department(dept_id)
+);
+
+-- Insert Faculty
+INSERT INTO Faculty VALUES
+(201, 'Dr. Sharma', 75000.00, 101),
+(202, 'Dr. Verma', 80000.00, 102),
+(203, 'Dr. Singh', 70000.00, 103),
+(204, 'Dr. Gupta', 72000.00, 104);
+
+
+-- 5. Create Course Table
+CREATE TABLE Course (
+    course_id INT PRIMARY KEY,
+    course_name VARCHAR(100) NOT NULL,
+    credits INT,
+    dept_id INT,
+    FOREIGN KEY (dept_id) REFERENCES Department(dept_id)
+);
+
+-- Insert Courses
+INSERT INTO Course VALUES
+(301, 'Database Management System', 4, 101),
+(302, 'Artificial Intelligence', 4, 102),
+(303, 'Data Structures', 3, 101),
+(304, 'Machine Learning', 4, 102),
+(305, 'Computer Networks', 3, 101);
+
+
+-- 6. Create Enrollment Table
+CREATE TABLE Enrollment (
+    enrollment_id INT PRIMARY KEY,
+    student_id INT,
+    course_id INT,
+    semester INT,
+    grade VARCHAR(5),
+    FOREIGN KEY (student_id) REFERENCES Student(student_id),
+    FOREIGN KEY (course_id) REFERENCES Course(course_id)
+);
+
+-- Insert Enrollment Records
+INSERT INTO Enrollment VALUES
+(1, 1, 301, 3, 'A'),
+(2, 1, 303, 3, 'A'),
+(3, 2, 302, 3, 'B'),
+(4, 3, 301, 3, 'A'),
+(5, 4, 304, 3, 'B'),
+(6, 5, 305, 3, 'A');
+
+
+-- 7. Create Attendance Table
+CREATE TABLE Attendance (
+    attendance_id INT PRIMARY KEY,
+    student_id INT,
+    course_id INT,
+    total_classes INT,
+    attended_classes INT,
+    FOREIGN KEY (student_id) REFERENCES Student(student_id),
+    FOREIGN KEY (course_id) REFERENCES Course(course_id)
+);
+
+-- Insert Attendance Records
+INSERT INTO Attendance VALUES
+(1, 1, 301, 40, 36),
+(2, 2, 302, 40, 32),
+(3, 3, 301, 40, 38),
+(4, 4, 304, 40, 30),
+(5, 5, 305, 40, 35);
+
+
+-- 8. Create Fees Table
+CREATE TABLE Fees (
+    fee_id INT PRIMARY KEY,
+    student_id INT,
+    total_fee DECIMAL(10,2),
+    paid_fee DECIMAL(10,2),
+    FOREIGN KEY (student_id) REFERENCES Student(student_id)
+);
+
+-- Insert Fee Records
+INSERT INTO Fees VALUES
+(1, 1, 100000.00, 80000.00),
+(2, 2, 100000.00, 100000.00),
+(3, 3, 100000.00, 75000.00),
+(4, 4, 100000.00, 90000.00),
+(5, 5, 100000.00, 60000.00);
+
+
+-- 9. Display All Tables
+SHOW TABLES;
+
+
+-- 10. Display All Students
+SELECT * FROM Student;
+
+
+-- 11. Display All Departments
+SELECT * FROM Department;
+
+
+-- 12. Display All Faculty
+SELECT * FROM Faculty;
+
+
+-- 13. Display All Courses
+SELECT * FROM Course;
+
+
+-- 14. Display Student Names with Department Names
+SELECT Student.student_name, Department.dept_name
+FROM Student
+JOIN Department
+ON Student.dept_id = Department.dept_id;
+
+
+-- 15. Display Student Names with Course Names
+SELECT Student.student_name, Course.course_name, Enrollment.grade
+FROM Student
+JOIN Enrollment ON Student.student_id = Enrollment.student_id
+JOIN Course ON Enrollment.course_id = Course.course_id;
+
+
+-- 16. Calculate Attendance Percentage
+SELECT Student.student_name,
+       Course.course_name,
+       Attendance.attended_classes,
+       Attendance.total_classes,
+       ROUND(Attendance.attended_classes * 100.0 /
+       NULLIF(Attendance.total_classes, 0), 2) AS attendance_percentage
+FROM Attendance
+JOIN Student ON Attendance.student_id = Student.student_id
+JOIN Course ON Attendance.course_id = Course.course_id;
+
+
+-- 17. Display Students Who Paid Less Than Total Fees
+SELECT Student.student_name,
+       Fees.total_fee,
+       Fees.paid_fee,
+       Fees.total_fee - Fees.paid_fee AS pending_fee
+FROM Student
+JOIN Fees ON Student.student_id = Fees.student_id
+WHERE Fees.paid_fee < Fees.total_fee;
+
+
+-- 18. Count Total Students
+SELECT COUNT(*) AS total_students
+FROM Student;
+
+
+-- 19. Find Average Faculty Salary
+SELECT AVG(salary) AS average_salary
+FROM Faculty;
+
+
+-- 20. Update Student City
+UPDATE Student
+SET city = 'Roorkee'
+WHERE student_id = 1;
+
+
+-- 21. Update Student Grade
+UPDATE Enrollment
+SET grade = 'A+'
+WHERE enrollment_id = 1;
+
+
+-- 22. Delete an Enrollment Record
+DELETE FROM Enrollment
+WHERE enrollment_id = 6;
+
+
+-- 23. Find Students from Varanasi
+SELECT *
+FROM Student
+WHERE city = 'Varanasi';
+
+
+-- 24. Sort Students by Name
+SELECT *
+FROM Student
+ORDER BY student_name ASC;
+```
