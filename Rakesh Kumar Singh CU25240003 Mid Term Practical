@@ -1,0 +1,15 @@
+#Rakesh Kumar Singh CSE 47 A CU25240003 2nd Year(3rd Sem)
+#Mid Term Practical - Problem Solving (Technical)
+
+print("Enter the number of test cases:")
+t = int(input())
+for i in range(t):
+    print("Enter string", i + 1, ":")
+    s = input().strip()
+    freq = [0] * 26
+    for ch in s:
+        freq[ord(ch) - ord('a')] += 1
+    ans = 0
+    for count in freq:
+        ans += count // 2
+    print("Maximum palindromic subsequences:", ans)
