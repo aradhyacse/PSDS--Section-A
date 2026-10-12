@@ -1,0 +1,39 @@
+class Stack:
+    def __init__(self):
+        self.stack = []
+
+    def push(self, x):
+        self.stack.append(x)
+
+    def pop(self):
+        return self.stack.pop()
+
+
+def evaluate(exp):
+    s = Stack()
+
+    for ch in exp:
+        if ch.isspace():
+            continue
+
+        if ch.isdigit():
+            s.push(int(ch))
+
+        elif ch in "+-*/":
+            b = s.pop()
+            a = s.pop()
+
+            if ch == '+':
+                s.push(a + b)
+            elif ch == '-':
+                s.push(a - b)
+            elif ch == '*':
+                s.push(a * b)
+            elif ch == '/':
+                s.push(a / b)
+
+    return s.pop()
+
+
+exp = input("Enter postfix expression: ")
+print("Result:", evaluate(exp))
