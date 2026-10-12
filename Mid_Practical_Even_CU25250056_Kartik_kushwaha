@@ -1,0 +1,24 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int n, k;
+        cin >> n >> k;
+        vector<int> a(n);
+        for (int &x : a) cin >> x;
+
+        sort(a.begin(), a.end(), [&](int x, int y) {
+            int dx = __builtin_popcount(x ^ k);
+            int dy = __builtin_popcount(y ^ k);
+            if (dx != dy) return dx < dy;   // pehle distance
+            return x < y;                   // tie mein value
+        });
+
+        for (int x : a) cout << x << " ";
+        cout << "\n";
+    }
+    return 0;
+}
