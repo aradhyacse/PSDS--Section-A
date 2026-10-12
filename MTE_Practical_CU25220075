@@ -1,0 +1,21 @@
+def solve():
+
+    T = int(input())
+    print("Number of test cases:", T)
+
+    for _ in range(T):
+
+        N, X = map(int, input().split())
+        print("Array size:", N, "| Value of X:", X)
+
+  
+        arr = list(map(int, input().split()))
+        print("Original array:", arr)
+
+        arr.sort(key=lambda num: ((num ^ X).bit_count(), num))
+
+        print("Sorted array:")
+        print(*arr)
+
+
+solve()
