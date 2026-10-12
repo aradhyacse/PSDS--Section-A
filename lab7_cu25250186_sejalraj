@@ -1,0 +1,25 @@
+import heapq
+
+# ---------- MIN HEAP ----------
+min_heap = []
+
+heapq.heappush(min_heap, 30)
+heapq.heappush(min_heap, 10)
+heapq.heappush(min_heap, 20)
+heapq.heappush(min_heap, 5)
+
+print("Min Heap:", min_heap)
+print("Smallest element:", heapq.heappop(min_heap))
+
+ 
+# ---------- MAX HEAP ----------
+max_heap = []
+
+heapq.heappush(max_heap, -30)
+heapq.heappush(max_heap, -10) 
+heapq.heappush(max_heap, -20)
+heapq.heappush(max_heap, -5)
+
+print("\nMax Heap:", [-x for x in max_heap]) 
+print("Largest element:", -heapq.heappop(max_heap))
+   
