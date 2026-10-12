@@ -1,0 +1,68 @@
+# Input N and K
+n, k = map(int, input("Enter N and K: ").split())
+
+# Input array
+arr = list(map(int, input("Enter array elements: ").split()))
+
+# Sum of first window
+window_sum = sum(arr[:k])
+max_sum = window_sum
+
+# Sliding Window
+for i in range(k, n):
+    window_sum = window_sum + arr[i] - arr[i - k]
+    max_sum = max(max_sum, window_sum)
+
+# Output
+print("Maximum sum =", max_sum)
+
+
+s = input("Enter the string: ")
+
+char_set = set()
+left = 0
+max_length = 0
+
+for right in range(len(s)):
+    while s[right] in char_set:
+        char_set.remove(s[left])
+        left += 1
+
+    char_set.add(s[right])
+    max_length = max(max_length, right - left + 1)
+
+print("Length of longest substring =", max_length)
+
+
+INF = float('inf')
+
+N, M, K = map(int, input("Enter N, M and K: ").split())
+
+edges = []
+
+print("Enter u, v and weight for each edge:")
+for _ in range(M):
+    u, v, w = map(int, input().split())
+    edges.append((u, v, w))
+
+# dp[i] = minimum cost to reach node i
+# using at most current number of edges
+dp = [INF] * (N + 1)
+dp[1] = 0
+
+for _ in range(K):
+    new_dp = dp.copy()
+
+    for u, v, w in edges:
+        if dp[u] != INF:
+            new_dp[v] = min(new_dp[v], dp[u] + w)
+
+        if dp[v] != INF:
+            new_dp[u] = min(new_dp[u], dp[v] + w)
+
+    dp = new_dp
+
+if dp[N] == INF:
+    print(-1)
+else:
+    print("Minimum path weight =", dp[N])
