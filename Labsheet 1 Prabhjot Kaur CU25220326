@@ -1,0 +1,30 @@
+# Program to count pairs having same digit sum
+
+# Input
+N = int(input("Enter number of elements: "))
+nums = list(map(int, input("Enter elements: ").split()))
+
+# Dictionary to store frequency of digit sums
+freq = {}
+
+# Finding digit sum and storing frequency
+for num in nums:
+    temp = abs(num)   # to handle negative numbers
+    s = 0
+    
+    while temp > 0:
+        s += temp % 10
+        temp //= 10
+    
+    if s in freq:
+        freq[s] += 1
+    else:
+        freq[s] = 1
+
+# Calculating number of pairs
+ans = 0
+for count in freq.values():
+    ans += (count * (count - 1)) // 2
+
+# Output
+print("Number of special pairs is:", ans)
