@@ -1,0 +1,20 @@
+import numpy as np
+
+# Create a queue
+queue = np.array([10, 20, 30])
+
+print("Original Queue:", queue)
+
+# Enqueue operation
+queue = np.append(queue, 40)
+
+print("After Enqueue:", queue)
+
+# Dequeue operation
+dequeued_item = queue[0]
+
+print("Dequeued Item:", dequeued_item)
+
+queue = np.delete(queue, 0)
+
+print("After Dequeue:", queue)
