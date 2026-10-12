@@ -1,0 +1,28 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int solve(int N, vector<int>& A) {
+    // Operation rule is missing from the question.
+    // Add the correct logic here.
+    return -1;
+}
+
+int main() {
+    int T;
+    cin >> T;
+
+    while (T--) {
+        int N;
+        cin >> N;
+
+        vector<int> A(N);
+        for (int i = 0; i < N; i++) {
+            cin >> A[i];
+        }
+
+        cout << solve(N, A) << endl;
+    }
+
+    return 0;
+}
