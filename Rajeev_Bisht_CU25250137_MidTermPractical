@@ -1,0 +1,15 @@
+def solve():
+    print("Enter N and K: ", end="")
+    n, k = map(int, input().split())
+    
+    print("Enter array elements: ", end="")
+    arr = list(map(int, input().split()))
+    
+    arr.sort(key=lambda x: (bin(x ^ k).count('1'), x))
+    
+    print("Output:", *arr)
+
+print("Enter number of test cases (T): ", end="")
+t = int(input())
+for i in range(t):
+    solve()
