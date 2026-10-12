@@ -1,0 +1,87 @@
+#Labsheet 8-I
+# Taking input
+n, k = map(int, input("Enter n and k: ").split())
+arr = list(map(int, input("Enter array elements: ").split()))
+
+# First window
+window_sum = 0
+for i in range(k):
+    window_sum += arr[i]
+
+max_sum = window_sum
+
+# Sliding window
+for i in range(k, n):
+    window_sum = window_sum + arr[i] - arr[i - k]
+    if window_sum > max_sum:
+        max_sum = window_sum
+
+print("Maximum sum is:", max_sum)
+
+#Labsheet 8-II
+# Taking input
+s = input("Enter string: ")
+
+char_set = set()
+left = 0
+max_len = 0
+
+for right in range(len(s)):
+    # If duplicate, shrink window
+    while s[right] in char_set:
+        char_set.remove(s[left])
+        left += 1
+
+    char_set.add(s[right])
+    
+    curr_len = right - left + 1
+    if curr_len > max_len:
+        max_len = curr_len
+
+#Labsheet 8-III
+import heapq
+
+# Input
+n, m, k = map(int, input("Enter n, m, k: ").split())
+
+adj = [[] for _ in range(n + 1)]
+
+print("Enter edges (u v w):")
+for _ in range(m):
+    u, v, w = map(int, input().split())
+    adj[u].append((v, w))
+    adj[v].append((u, w))
+
+INF = 10**9
+
+# dist[node][edges_used]
+dist = []
+for i in range(n + 1):
+    dist.append([INF] * (k + 1))
+
+# Min heap
+pq = []
+heapq.heappush(pq, (0, 1, 0))  # (cost, node, edges_used)
+dist[1][0] = 0
+
+answer = -1
+
+while len(pq) > 0:
+    cost, node, edges = heapq.heappop(pq)
+
+    if node == n:
+        answer = cost
+        break
+
+    if edges == k:
+        continue
+
+    for nei, wt in adj[node]:
+        new_cost = cost + wt
+        if new_cost < dist[nei][edges + 1]:
+            dist[nei][edges + 1] = new_cost
+            heapq.heappush(pq, (new_cost, nei, edges + 1))
+
+print("Answer:", answer)
+
+print("Length of longest substring:", max_len)
