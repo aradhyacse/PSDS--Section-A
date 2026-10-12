@@ -1,0 +1,13 @@
+T = int(input())
+
+for _ in range(T):
+S = input().strip()
+freq = [0] * 26
+
+```
+for ch in S:
+    freq[ord(ch) - ord('a')] += 1
+
+ans = sum(count // 2 for count in freq)
+print(ans)
+```
