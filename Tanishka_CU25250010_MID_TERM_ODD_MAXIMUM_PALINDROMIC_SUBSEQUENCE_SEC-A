@@ -1,0 +1,17 @@
+
+T = int(input("Enter the number of test cases: "))
+
+for t in range(T):
+    S = input("Enter the string: ")
+
+    freq = [0] * 26
+
+    for ch in S:
+        freq[ord(ch) - ord('a')] += 1
+
+    count = 0
+
+    for i in range(26):
+        count += freq[i] // 2
+
+    print("Maximum palindromic subsequences:", count)
