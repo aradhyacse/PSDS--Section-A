@@ -1,0 +1,14 @@
+T = int(input())
+
+for _ in range(T):
+    S = input().strip()
+    freq = {}
+
+    for ch in S:
+        freq[ch] = freq.get(ch, 0) + 1
+
+    count = 0
+    for value in freq.values():
+        count += value // 2
+
+    print(count)
