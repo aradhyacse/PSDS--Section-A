@@ -1,0 +1,20 @@
+# Push and Pop
+import numpy as np
+
+arr = np.array([1, 2, 3])
+
+# Push
+arr = np.append(arr, 4)
+print("After push:", arr)
+
+# Pop
+arr = np.delete(arr, -1)
+print("After pop:", arr)
+
+arr = np.array([10, 20, 30, 40, 50])
+
+while len(arr) > 0:
+    popElement = arr[-1]
+    print("Popping this item:", popElement)
+    arr = np.delete(arr, -1)
+    print("Array after pop:", arr)
