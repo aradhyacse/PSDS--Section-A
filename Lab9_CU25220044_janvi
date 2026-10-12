@@ -1,0 +1,32 @@
+def solve():
+    n = int(input("Enter size of array: "))
+    arr = list(map(int, input("Enter array elements: ").split()))
+    
+    has_pos = False
+    has_neg = False
+    
+    for x in arr:
+        if x > 0:
+            has_pos = True
+        if x < 0:
+            has_neg = True
+    
+    if has_pos and has_neg:
+        print("Output:", -1)
+        return
+    
+    operations = 0
+    for x in arr:
+        operations += abs(x)
+    
+    print("Output:", operations)
+
+
+# Main
+t = int(input("Enter number of test cases: "))
+
+for i in range(t):
+    print("\nTest Case", i + 1)
+    solve()
+
+    
