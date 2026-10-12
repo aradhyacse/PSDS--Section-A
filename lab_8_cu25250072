@@ -1,0 +1,230 @@
+// #include <iostream>
+// using namespace std;
+
+// int main() {
+//     int N, K;
+
+//     cin >> N >> K;
+
+//     int arr[N];
+
+//     for (int i = 0; i < N; i++) {
+//         cin >> arr[i];
+//     }
+
+//     // Calculate sum of first K elements
+//     int windowSum = 0;
+
+//     for (int i = 0; i < K; i++) {
+//         windowSum += arr[i];
+//     }
+
+//     int maxSum = windowSum;
+
+//     // Sliding Window
+//     for (int i = K; i < N; i++) {
+//         windowSum += arr[i];
+//         windowSum -= arr[i - K];
+
+//         if (windowSum > maxSum) {
+//             maxSum = windowSum;
+//         }
+//     }
+
+//     cout << maxSum << endl;
+
+//     return 0;
+// }
+// #include <iostream>
+// #include <string>
+// using namespace std;
+
+// int main() {
+//     string s;
+
+//     cin >> s;
+
+//     int lastSeen[26];
+
+//     // Initialize all characters as not seen
+//     for (int i = 0; i < 26; i++) {
+//         lastSeen[i] = -1;
+//     }
+
+//     int left = 0;
+//     int maxLength = 0;
+
+//     for (int right = 0; right < s.length(); right++) {
+
+//         int index = s[right] - 'a';
+
+//         // If character was already seen
+//         if (lastSeen[index] >= left) {
+//             left = lastSeen[index] + 1;
+//         }
+
+//         lastSeen[index] = right;
+
+//         int currentLength = right - left + 1;
+
+//         if (currentLength > maxLength) {
+//             maxLength = currentLength;
+//         }
+//     }
+
+//     cout << maxLength << endl;
+
+//     return 0;
+// }
+// #include <iostream>
+// #include <vector>
+// #include <climits>
+// using namespace std;
+
+// int main() {
+//     int N, M, K;
+
+//     cin >> N >> M >> K;
+
+//     // Adjacency list
+//     vector<vector<pair<int, int>>> graph(N + 1);
+
+//     for (int i = 0; i < M; i++) {
+//         int u, v, weight;
+
+//         cin >> u >> v >> weight;
+
+//         // Undirected graph
+//         graph[u].push_back({v, weight});
+//         graph[v].push_back({u, weight});
+//     }
+
+//     // dist[node][edges_used]
+//     vector<vector<long long>> dist(
+//         N + 1,
+//         vector<long long>(K + 1, LLONG_MAX)
+//     );
+
+//     // Starting point
+//     dist[1][0] = 0;
+
+//     // Try paths using 1, 2, ... K edges
+//     for (int edgesUsed = 0; edgesUsed < K; edgesUsed++) {
+
+//         for (int u = 1; u <= N; u++) {
+
+//             if (dist[u][edgesUsed] == LLONG_MAX) {
+//                 continue;
+//             }
+
+//             for (auto edge : graph[u]) {
+
+//                 int v = edge.first;
+//                 int weight = edge.second;
+
+//                 long long newDistance =
+//                     dist[u][edgesUsed] + weight;
+
+//                 if (newDistance < dist[v][edgesUsed + 1]) {
+//                     dist[v][edgesUsed + 1] = newDistance;
+//                 }
+//             }
+//         }
+//     }
+
+//     // Find minimum distance using at most K edges
+//     long long answer = LLONG_MAX;
+
+//     for (int edgesUsed = 0; edgesUsed <= K; edgesUsed++) {
+//         if (dist[N][edgesUsed] < answer) {
+//             answer = dist[N][edgesUsed];
+//         }
+//     }
+
+//     if (answer == LLONG_MAX) {
+//         cout << -1 << endl;
+//     }
+//     else {
+//         cout << answer << endl;
+//     }
+
+//     return 0;
+// }
+// labhseet 9
+#include <iostream>
+using namespace std;
+
+int main() {
+    int T;
+    cin >> T;
+
+    while (T--) {
+        int N;
+        cin >> N;
+
+        int A[N];
+
+        for (int i = 0; i < N; i++) {
+            cin >> A[i];
+        }
+
+        int operations = 0;
+        bool possible = true;
+
+        for (int i = 0; i < N; i++) {
+            if (A[i] < 0) {
+                operations += -A[i];
+            }
+            else if (A[i] > 0) {
+                possible = false;
+            }
+        }
+
+        if (possible)
+            cout << operations << endl;
+        else
+            cout << -1 << endl;
+    }
+
+    return 0;
+}
+// labhseet 10
+// #include <iostream>
+// using namespace std;
+
+// int digitSum(int n) {
+//     int sum = 0;
+
+//     while (n > 0) {
+//         sum += n % 10;
+//         n /= 10;
+//     }
+
+//     return sum;
+// }
+
+// int main() {
+//     int N;
+//     cin >> N;
+
+//     int nums[N];
+
+//     for (int i = 0; i < N; i++) {
+//         cin >> nums[i];
+//     }
+
+//     int count[1000] = {0};
+//     long long pairs = 0;
+
+//     for (int i = 0; i < N; i++) {
+//         int sum = digitSum(nums[i]);
+
+//         pairs += count[sum];
+
+//         count[sum]++;
+//     }
+
+//     cout << pairs << endl;
+
+//     return 0;
+// }
