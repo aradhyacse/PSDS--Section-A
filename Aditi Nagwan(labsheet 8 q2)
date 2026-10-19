@@ -1,0 +1,20 @@
+s = input("Enter the string: ")
+
+left = 0
+max_length = 0
+characters = set()
+
+for right in range(len(s)):
+
+    while s[right] in characters:
+        characters.remove(s[left])
+        left += 1
+
+    characters.add(s[right])
+
+    length = right - left + 1
+
+    if length > max_length:
+        max_length = length
+
+print("Longest substring length:", max_length)

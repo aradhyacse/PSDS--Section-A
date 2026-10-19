@@ -1,0 +1,8 @@
+import numpy as numpy
+arr=np.array([1,2,3])
+#push
+arr=np.append(arr,4)
+print("After Push:",arr)
+#pop
+arr=np.delete(arr,-1)
+print("After pop:",arr)
